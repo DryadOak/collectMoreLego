@@ -8,12 +8,10 @@
         </figcaption>
     </figure>
     <div class="checkbox-container">
-        <% checkboxTypes.forEach(function(checkbox) { %>
-            <input type="checkbox" id="<%= checkbox %>-<%= set.number %>" class="checkbox-input">
-            <label for="<%= checkbox %>-<%= set.number %>"><%= checkbox %></label>
-            <% /* Add event listener */ %>
+        <% buttonTypes.forEach(function(button) { %>
+            <button id="<%= button %>-<%= set.number %>" class="button"><%= button %></button>
             <script>
-                new CheckboxHandler('<%= checkbox %>', <%- JSON.stringify(set) %>);
+                new FigureButtonHandler('<%= button %>', <%- JSON.stringify(set) %>);
             </script>
         <% }); %>
     </div>

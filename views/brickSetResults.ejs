@@ -4,7 +4,7 @@
         <% console.log(legoObject) %>
             <% if (legoObject.status === 'success' && legoObject.matches > 0) { %>
                 <% legoObject.sets.forEach(function(set) { %>
-                    <%- include('partials/legoSetFigurePartial', {set: set, checkboxTypes: ['Collection', 'Wishlist']}) %>
+                    <%- include('partials/legoSetFigurePartial', {set: set, buttonTypes: ['Collection', 'Wishlist']}) %>
                 <% }); %>
             <% } else { %>
                 <p>No matching sets found.</p>

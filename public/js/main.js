@@ -1,17 +1,17 @@
 "use strict";
-class CheckboxHandler {
-    constructor(checkbox, set) {
-        this.checkboxLabel = checkbox;
+class FigureButtonHandler {
+    constructor(buttonLabel, set) {
+        this.buttonLabel = buttonLabel;
         this.set = set;
-        this.checkboxElement = document.getElementById(`${this.checkboxLabel}-${set.number}`);
-        if(this.checkboxElement){
-            this.checkboxElement.addEventListener('change', this.handleChange.bind(this));
+        this.buttonElement = document.getElementById(`${this.buttonLabel}-${set.number}`);
+        if(this.buttonElement){
+            this.buttonElement.addEventListener('click', this.handleChange.bind(this));
         }
     }
 
     async handleChange() {
         try {
-            switch (this.checkboxLabel) {
+            switch (this.buttonLabel) {
                 case 'Remove':
                     await this.removeItem();
                     break;
@@ -28,7 +28,7 @@ class CheckboxHandler {
                     await this.addItemToWishlist();
                     break;
                 default:
-                    console.error('Invalid checkbox label');
+                    console.error('Invalid button label');
                     return;
             }
         } catch (error) {
@@ -40,7 +40,7 @@ class CheckboxHandler {
         const url = '/userCollection/deleteItem';
         const method = 'DELETE'
         await this.performAction(url, method);
-        DOMUtils.deleteItemSmoothly(this.checkboxElement)
+        DOMUtils.deleteItemSmoothly(this.buttonElement)
     }
 
     async editItem() {
@@ -62,7 +62,7 @@ class CheckboxHandler {
     }
 
     async performAction(url, method) {
-        console.log(this.checkboxLabel)
+        console.log(this.buttonLabel)
         const response = await fetch(url, {
             method: method,
             headers: {
@@ -74,7 +74,7 @@ class CheckboxHandler {
         if (!response.ok) {
             const errorResponse = await response.json();
             const errorMessage = errorResponse.error;
-            throw new Error(`Failed to perform action ${this.checkboxLabel}: ${errorMessage}`);
+            throw new Error(`Failed to perform action ${this.buttonLabel}: ${errorMessage}`);
         }
 
         const confirmation = await response.json();
@@ -84,8 +84,8 @@ class CheckboxHandler {
 
 
 class DOMUtils {
-    static deleteItemSmoothly(checkboxElement) {
-        const setCard = checkboxElement.closest('.set-card')
+    static deleteItemSmoothly(buttonElement) {
+        const setCard = buttonElement.closest('.set-card')
 
         if (setCard) {
             setCard.style.transition = 'opacity 0.5s ease'; 
@@ -160,51 +160,41 @@ class DOMUtils {
     }
 
     
-    static addEditOption(popup, set, setDetailsUl){
-        const editCheckbox = document.createElement('input');
-        editCheckbox.type = 'checkbox';
-        editCheckbox.classList.add('checkbox-input');
-        const editLabel = document.createElement('label');
-        editLabel.textContent = 'Edit';
-        editLabel.classList.add('padding-inline-100')
+    static addEditOption(popup, set, setDetailsUl) {
+        const editButton = document.createElement('button');
+        editButton.textContent = 'Edit';
+        editButton.classList.add('edit-button');
         
-        const saveCheckbox = document.createElement('input');
-        saveCheckbox.type = 'checkbox';
-        saveCheckbox.style.display = 'none';
-        const saveLabel = document.createElement('label');
-        saveLabel.textContent = 'Save';
-        saveLabel.style.display = 'none'; 
-        saveCheckbox.id = `Save-${set.number}`
-        saveLabel.classList.add('padding-inline-100')
-        // change above to reduce dupilaction
+        const saveButton = document.createElement('button');
+        saveButton.textContent = 'Save';
+        saveButton.style.display = 'none';
+        saveButton.classList.add('save-button');
         
-        
-        editCheckbox.addEventListener('change', function() {
+        let editButtonClicked = false;
+
+        editButton.addEventListener('click', function() {
+            editButtonClicked = !editButtonClicked;
+            const saveButtonDisplay = editButtonClicked ? 'inline-block' : 'none';
+            saveButton.style.display = saveButtonDisplay;
             const inputs = setDetailsUl.querySelectorAll('input');
-            const saveCheckboxDisplay = this.checked ? 'inline-block' : 'none';
-            saveCheckbox.style.display = saveCheckboxDisplay;
-            saveLabel.style.display = saveCheckboxDisplay;
             inputs.forEach(input => {
-                input.disabled = !this.checked;
+                input.disabled = !editButtonClicked;
             });
         });
         
-        saveCheckbox.addEventListener( 'click', async () => {
+        saveButton.addEventListener('click', async () => {
             const inputs = setDetailsUl.querySelectorAll('input');
             inputs.forEach(input => {
                 const property = input.id;
                 const sanitizedValue = DOMUtils.sanitizeInput(input.value);
                 set[property] = sanitizedValue;
             });
-            const checkboxHandler = new CheckboxHandler('Edit', set);
-            await checkboxHandler.handleChange();
+            const figureButtonHandler = new FigureButtonHandler('Edit', set);
+            await figureButtonHandler.handleChange();
         });
-        popup.appendChild(editCheckbox);
-        popup.appendChild(editLabel);
-        popup.appendChild(saveCheckbox);
-        popup.appendChild(saveLabel);
-        // consider create the lable and input and appending together 
-        // use the performAction method to send request to server to put
+        
+        popup.appendChild(editButton);
+        popup.appendChild(saveButton);
     }
         
     static formatWithCapitalizeAndSpace(str) {

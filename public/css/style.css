@@ -465,31 +465,7 @@ body {
     margin-left: auto;
 }
 
-/* set cards */
-
-.set-card img{
-    object-fit: contain;
-    margin: 0 auto;
-    height: 17rem;
-}
-
-
-/* theme card */
-.set-card{
-    border: solid 1px var(--clr-neutral-300);
-    border-radius: 2rem;
-    padding: 2rem;
-    /* height: 30rem; */
-}
-/* combine below figcap */
-.set-card figcaption{
-    margin-top: 1.7rem;
-    display: flex;
-    justify-content: space-between;
-    /* white-space: nowrap; */
-    font-size: clamp(1rem, 1.1vw, 2.4rem);
-}
-
+/* theme and set cards */
 .themeFigcaption{
     display: flex;
     justify-content: space-between;
@@ -508,7 +484,44 @@ body {
         object-fit: cover;
     }
 }
+
+.set-card img{
+    object-fit: contain;
+    margin: 0 auto;
+    height: 17rem;
+}
+
+.set-card{
+    border: solid 1px var(--clr-neutral-300);
+    border-radius: 2rem;
+    padding: 2rem;
+    /* height: 30rem; */
+}
+
+.set-card figcaption{
+    margin-top: 1.7rem;
+    display: flex;
+    justify-content: space-between;
+    /* white-space: nowrap; */
+    font-size: clamp(1rem, 1.1vw, 2.4rem);
+}
+
+.set-card button, .popup button{
+    border: solid 1px var(--clr-neutral-300);
+    border-radius: .6rem;
+    padding: 0 .6rem;
+    font-size: var(--fs-400);
+}
+.set-card button:hover, .popup button:hover{
+    background-color: var(--clr-neutral-300);
+}
+
+
 /* popup details */
+.popup button{
+    margin-right: .6rem;
+}
+
 .popup {
     position: fixed;
     top: 50%;
@@ -562,3 +575,108 @@ input[type="text"]{
     border-radius: .4rem;
 }
 
+
+/*Submit expand btn, CodePen ny Yoann */
+button.expand {
+	--button-height: 48px;
+	overflow: hidden;
+	outline: none;
+	background-color: rgb(225, 228, 225);
+	border-radius: 8px;
+	padding: 10px 25px;
+	border: none;
+	color: black;
+	cursor: pointer;
+	position: relative;
+	transition: padding 0.3s;
+}
+ 
+.expand-icon {
+	--icon-size: 10px;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: var(--button-height);
+	width: var(--button-height);
+	border-left: 1px solid #eee;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transform: translateX(calc(var(--button-height) + 1px));
+	transition: transform 0.3s;
+}
+
+.expand-icon > svg {
+	height: var(--icon-size);
+	width: var(--icon-size);
+	transform: scale(1.5);
+	transition: transform 0.3s;
+}
+
+.expand-icon > svg.second {
+	display: none;
+	transform: scale(0) translateY(50px);
+	transition: transform 0.3s;
+}
+
+button.expand:hover,
+button.expand.loading {
+	padding-right: calc(25px + var(--button-height));
+}
+
+button.expand:hover > .expand-icon,
+button.expand.loading > .expand-icon {
+	transform: translateX(0);
+	transition: transform 0.3s 0.05s;
+}
+
+button.expand.loading > .expand-icon > svg {
+	transform: scale(0);
+}
+
+@keyframes rotate {
+	0% {
+		transform: scale(0.3) rotateZ(0deg);
+	}
+	100% {
+		transform: scale(0.3) rotateZ(360deg);
+	}
+}
+
+.loader {
+	--loader-size: 52px;
+	height: var(--loader-size);
+	width: var(--loader-size);
+	border: 4px solid black;
+	border-left-color: transparent;
+	border-right-color: transparent;
+	background-color: transparent;
+	border-radius: 50%;
+	animation: rotate 1.5s linear infinite;
+	position: absolute;
+	right: 0;
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 1s 0.3s;
+}
+
+button.expand.loading > span > span.loader {
+	opacity: 1;
+}
+
+button.expand.loaded > span > span.loader {
+	opacity: 0 !important;
+}
+
+button.expand.loaded > .expand-icon > svg.first {
+	display: none;
+}
+
+button.expand.loaded > .expand-icon > svg.second {
+	display: block;
+}
+
+button.expand.finished > .expand-icon > svg.second {
+	transform: scale(1.5) translateY(0px);
+}
