@@ -1,0 +1,20 @@
+<section class="container">
+    <!-- <div class="hero">
+        <img src="/images/wishlistHero.jpg" alt="wishlistHero">
+    </div> -->
+    <div class="flex-container padding-inline-1200">
+        <h1 class="fs-primary-heading fw-semi-bold padding-block-900">Wish List</h1>
+        <div id="sortContainer">
+            <%- include('partials/sortByOptionsPartial', { currentPage: currentPage }) %>
+        </div>
+    </div>
+    <div id="results-container" class="even-columns padding-block-600">
+            <% if (legoObject.status === 'success' && legoObject.matches > 0) { %>
+                <% legoObject.sets.forEach(function(set) { %>
+                    <%- include('partials/legoSetFigurePartial', {set: set, checkboxTypes: ['Details', 'Remove']}) %>
+                <% }); %>
+            <% } else { %>
+                <p>No matching sets found.</p>
+            <% } %>
+    </div>
+</section>

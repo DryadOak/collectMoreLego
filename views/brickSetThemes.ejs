@@ -1,0 +1,29 @@
+<section class="container">
+    <h1 class="fs-primary-heading fw-semi-bold padding-block-900 padding-inline-1200">Popular Themes</h1>
+
+    <div id="results-container" class="container">
+        <% if (legoObject.status === 'success' && legoObject.matches > 0) { %>
+            <div>
+                <div class="even-columns">
+                    <% legoObject.sets.forEach(function(themeObject) { %>
+                        <% if (themeObject.popular) { %>
+                            <%- include('partials/legoThemePartial', {themeObject: themeObject}) %>
+                        <% } %>
+                    <% }); %>
+                </div>
+            </div>
+            <div class="padding-block-900">
+                <h2 class="fs-secondary-heading padding-block-700 padding-inline-900">Other Themes</h2>
+                <div class="even-columns">
+                    <% legoObject.sets.forEach(function(themeObject) { %>
+                        <% if (!themeObject.popular) { %>
+                            <%- include('partials/legoThemePartial', {themeObject: themeObject}) %>
+                        <% } %>
+                    <% }); %>
+                </div>
+            </div>
+        <% } else { %>
+            <p>Unable to fetch themes from datebase</p>
+        <% } %>
+    </div>
+</section>

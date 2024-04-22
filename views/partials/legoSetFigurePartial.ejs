@@ -1,0 +1,20 @@
+<div class="set-card">
+    <figure>
+        <div class="img-container">
+            <img src="<%= set.image.imageURL || '/images/placeholder.jpg' %>" alt="<%= set.name %>">
+        </div>
+        <figcaption>
+            <h2 class="fw-semi-bold"><%= set.name %>: <%= set.number %></h2>
+        </figcaption>
+    </figure>
+    <div class="checkbox-container">
+        <% checkboxTypes.forEach(function(checkbox) { %>
+            <input type="checkbox" id="<%= checkbox %>-<%= set.number %>" class="checkbox-input">
+            <label for="<%= checkbox %>-<%= set.number %>"><%= checkbox %></label>
+            <% /* Add event listener */ %>
+            <script>
+                new CheckboxHandler('<%= checkbox %>', <%- JSON.stringify(set) %>);
+            </script>
+        <% }); %>
+    </div>
+</div>

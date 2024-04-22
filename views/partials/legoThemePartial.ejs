@@ -1,0 +1,13 @@
+<div class="set-card theme-card">
+    <a href="/brickSetApi/search?searchInput=<%= themeObject.theme %>"> 
+        <figure>
+            <div class="img-container">
+                <img src="<%= themeObject.imageURL %>" alt="<%= themeObject.theme %>">
+            </div>
+            <figcaption class="themeFigcaption">
+                <h3 class="fw-semi-bold"><%= themeObject.theme%></h3>
+                <span><%= themeObject.setCount %> Sets</span>
+            </figcaption>
+        </figure>
+    </a>
+</div>

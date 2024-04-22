@@ -1,0 +1,47 @@
+<section>
+    <!-- <div class="hero">
+        <img src="/images/collectionHero.jpg" alt="collectionHero">
+        <h1 class="primary-header">My Collection</h1>
+    </div> -->
+    <div class="hero text-neutral-100 padding-block-900">
+        <div class="container">
+            <h1 class="fs-primary-heading fw-semi-bold padding-block-700">My Collection</h1>
+            <% if (legoObject.status === 'success' && legoObject.matches > 0) { %>
+                <div class="collection-stats-container">
+                    <ul class="collection-stats">
+                        <!-- Sets: -->
+                        <li><span class="fw-semi-bold">Sets:</span> <%= legoObject.sets.length %></li>
+                        <!-- Calculate Minifigs, Piece Count, and Money Well Spent -->
+                        <% let totalMinifigs = 0;
+                        let totalPieceCount = 0;
+                        let totalMoneySpent = 0;
+                        legoObject.sets.forEach(function(set) { 
+                            totalMinifigs += set.minifigs || 0;
+                            totalPieceCount += set.pieces || 0;
+                            totalMoneySpent += set.purchasePrice || 0;
+                        }); %>
+                        <li><span class="fw-semi-bold">Minifigs:</span> <%= totalMinifigs %></li>
+                        <li><span class="fw-semi-bold">Piece Count:</span> <%= totalPieceCount %></li>
+                        <li><span class="fw-semi-bold">Money Well Spent:</span> £<%= totalMoneySpent.toFixed(2) %></li>
+                    </ul>
+                </div>
+            <% } %>
+        </div>
+        </div>
+        <div class="container">
+            <div id="sortContainer" class="padding-block-600">
+                <div>
+                    <%- include('partials/sortByOptionsPartial', { currentPage: currentPage }) %>
+                </div>
+            </div>
+            <div id="results-container" class="even-columns">
+                <% if (legoObject.status === 'success' && legoObject.matches > 0) { %>
+                    <% legoObject.sets.forEach(function(set) { %>
+                        <%- include('partials/legoSetFigurePartial', {set: set, checkboxTypes: ['Details', 'Remove']}) %>
+                    <% }); %>
+                <% } else { %>
+                    <p>No matching sets found.</p>
+                <% } %>
+        </div>
+    </div>
+</section>

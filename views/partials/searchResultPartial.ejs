@@ -1,0 +1,45 @@
+<div class="set-card">
+    <figure>
+        <img src="<%= set.image.imageURL || '/images/placeholder.jpg' %>" alt="<%= set.name %>">
+        <figcaption>
+            <h2 class="fw-semi-bold"><%= set.name %>: <%= set.number %></h2>
+        </figcaption>
+    </figure>
+    <div class="checkbox-container">
+        <% var checkboxes = ['Collection', 'Wishlist']; %>
+        <% checkboxes.forEach(function(checkbox) { %>
+            <input type="checkbox" id="<%= checkbox %>-<%= set.number %>" class="checkbox-input">
+            <label for="<%= checkbox %>-<%= set.number %>"><%= checkbox %></label>
+            <% /* Add event listener */ %>
+            <script>
+                document.getElementById('<%= checkbox %>-<%= set.number %>').addEventListener('change', async function() {
+                    try {
+                        const set = <%- JSON.stringify(set) %>;
+                        const isChecked = this.checked;
+                        const checkboxLabel = '<%= checkbox %>';
+                        const url = `/userCollection/${checkboxLabel === 'Collection' ? 'addToCollection' : 'addToWishlist'}`;
+                        const response = await fetch(url, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ set, isChecked }),
+                        });
+
+                        if (!response.ok) {
+                            const errorResponse = await response.json();
+                            const errorMessage = errorResponse.error;
+                            throw new Error(`Failed to add set to ${checkboxLabel}: ${errorMessage}`);
+                        }
+
+                        const confirmation = await response.json();
+                        console.log(confirmation);
+                    } catch (error) {
+                        console.error('Error:', error);
+                    }
+                });
+            </script>
+        <% }); %>
+    </div>
+</div>
+<!-- look at moving this script to main js by stringifying the set object -->
