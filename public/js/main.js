@@ -19,7 +19,8 @@ class FigureButtonHandler {
                     await DOMUtils.createItemDetailsPopup(this.set);
                     break;
                 case 'Edit':
-                    await this.editItem();
+                    const actionComplete = await this.editItem();
+                    return actionComplete
                     break;
                 case 'Collection':
                     await this.addItemToCollection();
@@ -46,7 +47,9 @@ class FigureButtonHandler {
     async editItem() {
         const url = '/userCollection/updateItem';
         const method = 'PUT'
-        await this.performAction(url, method);
+        const actionComplete = await this.performAction(url, method);
+        console.log(actionComplete)
+        return actionComplete
     }
 
     async addItemToCollection() {
@@ -159,16 +162,90 @@ class DOMUtils {
         DOMUtils.addEditOption(popup, set, setDetailsUl)
     }
 
+    static createInteractiveButton() {
+        const buttonContainer = document.createElement("div");
+        buttonContainer.classList.add("interactive-button-container");
+
+        const button = document.createElement("button");
+        button.classList.add("interactive-button", "expand");
+        button.textContent = "Save";
+
+        const expandIcon = document.createElement("span");
+        expandIcon.classList.add("expand-icon", "expand-hover");
+
+        const firstSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        firstSvg.classList.add("first");
+        firstSvg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+        firstSvg.setAttribute("fill", "#000");
+        firstSvg.setAttribute("viewBox", "0 0 32 32");
+
+        const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        path.setAttribute("d", "M8.489 31.975c-0.271 0-0.549-0.107-0.757-0.316-0.417-0.417-0.417-1.098 0-1.515l14.258-14.264-14.050-14.050c-0.417-0.417-0.417-1.098 0-1.515s1.098-0.417 1.515 0l14.807 14.807c0.417 0.417 0.417 1.098 0 1.515l-15.015 15.022c-0.208 0.208-0.486 0.316-0.757 0.316z");
+        firstSvg.appendChild(path);
+
+        const loaderSpan = document.createElement("span");
+        loaderSpan.classList.add("loader");
+
+        const secondSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+        secondSvg.classList.add("second");
+        secondSvg.setAttribute("viewBox", "0 0 20 20");
+        secondSvg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+        secondSvg.setAttribute("fill", "none");
+
+        const secondPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+        secondPath.setAttribute("stroke", "#000");
+        secondPath.setAttribute("stroke-linecap", "round");
+        secondPath.setAttribute("stroke-linejoin", "round");
+        secondPath.setAttribute("stroke-width", "2");
+        secondPath.setAttribute("d", "M17 5L8 15l-5-4");
+        secondSvg.appendChild(secondPath);
+
+        expandIcon.appendChild(firstSvg);
+        expandIcon.appendChild(loaderSpan);
+        expandIcon.appendChild(secondSvg);
+
+        button.appendChild(expandIcon);
+        buttonContainer.appendChild(button);
+
+        button.addEventListener("click", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const button = e.currentTarget;
+            button.classList.add("loading");
+            button.disabled = true;
+            setTimeout(() => {
+                button.classList.add("loaded");
+                setTimeout(() => {
+                    button.classList.add("finished");
+                    setTimeout(() => {
+                        button.classList.remove("finished");
+                        button.classList.remove("loaded");
+                        button.classList.remove("loading");
+                        button.disabled = false;
+                    }, 1500);
+                }, 700);
+            }, 1500);
+        }, false);
+
+        return buttonContainer;
+    }
+
+
     
     static addEditOption(popup, set, setDetailsUl) {
         const editButton = document.createElement('button');
         editButton.textContent = 'Edit';
         editButton.classList.add('edit-button');
-        
-        const saveButton = document.createElement('button');
-        saveButton.textContent = 'Save';
+
+        // const saveButton = document.createElement('button');
+        // saveButton.textContent = 'Save';
+        // saveButton.style.display = 'none';
+        // saveButton.classList.add('save-button');
+        const saveButton = DOMUtils.createInteractiveButton()
         saveButton.style.display = 'none';
-        saveButton.classList.add('save-button');
+        
+
+        
         
         let editButtonClicked = false;
 
@@ -182,16 +259,7 @@ class DOMUtils {
             });
         });
         
-        saveButton.addEventListener('click', async () => {
-            const inputs = setDetailsUl.querySelectorAll('input');
-            inputs.forEach(input => {
-                const property = input.id;
-                const sanitizedValue = DOMUtils.sanitizeInput(input.value);
-                set[property] = sanitizedValue;
-            });
-            const figureButtonHandler = new FigureButtonHandler('Edit', set);
-            await figureButtonHandler.handleChange();
-        });
+    
         
         popup.appendChild(editButton);
         popup.appendChild(saveButton);
