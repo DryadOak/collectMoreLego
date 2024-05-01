@@ -156,7 +156,14 @@ const fetchItemsFromDB = async (req, res, itemModel) => {
             };
 
             return legoObject
-        } else {
+        } else if(items.length === 0){
+            const legoObject = {
+                status: 'failure',
+                matches: items.length,
+                sets: items,
+            };
+            return legoObject
+        }else {
             console.log(`cant fetch ${itemModel.modelName}`)
             return res.status(400).json({ error: `Can not get ${itemModel.modelName} from the data base.` });
         }
