@@ -502,8 +502,13 @@ body {
     margin-top: 1.7rem;
     display: flex;
     justify-content: space-between;
-    /* white-space: nowrap; */
-    font-size: clamp(1rem, 1.1vw, 1.8rem);
+    white-space: nowrap;
+}
+
+@media (min-width: 53em) {
+    .set-card figcaption{
+        font-size: clamp(1rem, 1.1vw, 1.8rem);
+    }
 }
 
 .set-card button, .popup button{

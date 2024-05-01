@@ -45,6 +45,7 @@ class FigureButtonHandler {
     }
 
     async editItem() {
+        // call loading functions on interactive btn
         const url = '/userCollection/updateItem';
         const method = 'PUT'
         const actionComplete = await this.performAction(url, method);
@@ -207,26 +208,6 @@ class DOMUtils {
         button.appendChild(expandIcon);
         buttonContainer.appendChild(button);
 
-        button.addEventListener("click", function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            const button = e.currentTarget;
-            button.classList.add("loading");
-            button.disabled = true;
-            setTimeout(() => {
-                button.classList.add("loaded");
-                setTimeout(() => {
-                    button.classList.add("finished");
-                    setTimeout(() => {
-                        button.classList.remove("finished");
-                        button.classList.remove("loaded");
-                        button.classList.remove("loading");
-                        button.disabled = false;
-                    }, 1500);
-                }, 700);
-            }, 1500);
-        }, false);
-
         return buttonContainer;
     }
 
@@ -259,7 +240,40 @@ class DOMUtils {
             });
         });
         
-    
+        saveButton.addEventListener('click', async (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            const button = e.currentTarget.querySelector('button');
+            button.classList.add("loading");
+            button.disabled = true;
+            const inputs = setDetailsUl.querySelectorAll('input');
+            inputs.forEach(input => {
+                const property = input.id;
+                const sanitizedValue = DOMUtils.sanitizeInput(input.value);
+                set[property] = sanitizedValue;
+            });
+            const figureButtonHandler = new FigureButtonHandler('Edit', set);
+            const response = await figureButtonHandler.handleChange();
+            if(response){
+                button.classList.add("loaded");
+				button.classList.add("finished");
+                    setTimeout(() => {
+				        	button.classList.remove("loading");
+				        }, 1000);
+                    setTimeout(() => {
+                        button.classList.remove("loaded");
+                        button.classList.remove("finished");
+                        button.disabled = false;
+                    }, 2000);
+            } else {
+                button.classList.add("finished");
+				        setTimeout(() => {
+                            button.classList.remove("loading");
+				        	button.classList.remove("finished");
+				        	button.disabled = false;
+				        }, 1500);
+            }
+        });
         
         popup.appendChild(editButton);
         popup.appendChild(saveButton);
