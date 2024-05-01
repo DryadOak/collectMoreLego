@@ -388,9 +388,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     }
     // Display current year
-    // const currentYearElement = document.querySelector("#currentYear");
-    // const currentYear = new Date().getFullYear();
-    // currentYearElement.innerHTML += currentYear;
+    const currentYearElement = document.querySelector("#currentYear");
+    const currentYear = new Date().getFullYear();
+    currentYearElement.innerHTML += currentYear;
 
     // Creates loading effect for smoother img rendering by adding an effect class
     const blurDivs = document.querySelectorAll(".blur-load");

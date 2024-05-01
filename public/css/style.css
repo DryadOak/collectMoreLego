@@ -283,6 +283,9 @@
 }
 
 /* Padding and Margin  */
+.padding-block-200 {
+    padding-block: var(--size-200);
+}
 .padding-block-300 {
     padding-block: var(--size-300);
 }
@@ -356,6 +359,11 @@ body {
     flex-direction: column;
 }
 
+main {
+    margin: 0 0 auto 0;
+    padding-bottom: var(--size-1200);
+}
+
 .hero {
     background-image: url("/images/collectionHero.jpg");
     background-size: cover;
@@ -373,6 +381,11 @@ body {
     border-bottom: solid 1px var(--clr-neutral-300) 0.1;
     box-shadow: 0 4px 8px rgba(121, 120, 120, 0.1);
     position: relative;
+}
+
+footer{
+    border-top: solid 1px var(--clr-neutral-300);
+    box-shadow: 0 4px 8px rgba(158, 157, 157, 0.1);
 }
 
 .nav-list {
