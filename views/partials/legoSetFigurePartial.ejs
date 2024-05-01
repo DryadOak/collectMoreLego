@@ -9,7 +9,10 @@
     </figure>
     <div class="checkbox-container">
         <% buttonTypes.forEach(function(button) { %>
-            <button id="<%= button %>-<%= set.number %>" class="button"><%= button %></button>
+            <button id="<%= button %>-<%= set.number %>" class="button success-or-failure-btn">
+                <span class="button-text"><%= button %></span>
+                <span class="animation-content"></span>
+            </button>
             <script>
                 new FigureButtonHandler('<%= button %>', <%- JSON.stringify(set) %>);
             </script>

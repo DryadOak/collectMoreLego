@@ -21,13 +21,33 @@ class FigureButtonHandler {
                 case 'Edit':
                     const actionComplete = await this.editItem();
                     return actionComplete
-                    break;
                 case 'Collection':
-                    await this.addItemToCollection();
+                    this.showLoadingAnimation();
+                    try {
+                        const collectionItemAdded = await this.addItemToCollection();
+                        if (collectionItemAdded) {
+                            this.showSuccessAnimation();
+                        } else {
+                            this.showFailureAnimation();
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                        this.showFailureAnimation();
+                    }
                     break;
                 case 'Wishlist':
-                    await this.addItemToWishlist();
-                    break;
+                    this.showLoadingAnimation();
+                    try {
+                        const wishlistItemAdded = await this.addItemToWishlist();
+                        if (wishlistItemAdded) {
+                            this.showSuccessAnimation();
+                        } else {
+                            this.showFailureAnimation();
+                        }
+                    } catch (error) {
+                        console.error('Error:', error);
+                        this.showFailureAnimation();
+                    }
                 default:
                     console.error('Invalid button label');
                     return;
@@ -35,6 +55,26 @@ class FigureButtonHandler {
         } catch (error) {
             console.error('Error:', error);
         }
+    }
+
+    showLoadingAnimation() {
+        this.buttonElement.classList.add('loading');
+    }
+
+    showSuccessAnimation() {
+        this.buttonElement.classList.remove('loading');
+        this.buttonElement.classList.add('success');
+        setTimeout(() => {
+            this.buttonElement.classList.remove('success');
+        }, 2000);
+    }
+
+    showFailureAnimation() {
+        this.buttonElement.classList.remove('loading');
+        this.buttonElement.classList.add('failure');
+        setTimeout(() => {
+            this.buttonElement.classList.remove('failure');
+        }, 2000);
     }
 
     async removeItem() {
@@ -56,13 +96,15 @@ class FigureButtonHandler {
     async addItemToCollection() {
         const url = '/userCollection/addToCollection';
         const method = 'POST'
-        await this.performAction(url, method);
+        const actionComplete = await this.performAction(url, method);
+        return actionComplete
     }
 
     async addItemToWishlist() {
         const url = '/userCollection/addToWishlist';
         const method = 'POST'
-        await this.performAction(url, method);
+        const actionComplete = await this.performAction(url, method);
+        return actionComplete
     }
 
     async performAction(url, method) {
@@ -82,6 +124,7 @@ class FigureButtonHandler {
         }
 
         const confirmation = await response.json();
+        console.log(confirmation)
         return confirmation
     }
 }
