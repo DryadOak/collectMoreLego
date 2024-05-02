@@ -1,37 +1,39 @@
 <% sortBy = typeof sortBy !== 'undefined' ? sortBy : false %>
-<form class="sort-form fs-400" action="/userCollection/sortResults?currentPage=<%= currentPage.slice(1) %>" method="post">
-    <select id="sortBy" name="sortBy">
-        <!-- Placeholder option -->
-         <option value="" <%= !sortBy ? 'selected' : '' %> disabled>Sort By:</option>
+<div class="container">
+    <form class="sort-form fs-400 padding-inline-300" action="/userCollection/sortResults?currentPage=<%= currentPage.slice(1) %>" method="post">
+        <select id="sortBy" name="sortBy">
+            <!-- Placeholder option -->
+            <option value="" <%= !sortBy ? 'selected' : '' %> disabled>Sort By:</option>
 
-        <!-- Common sorting options -->
-        <%
-        const sortingOptions = [
-            { value: 'number_asc', label: 'Set Number (Ascending)' },
-            { value: 'number_desc', label: 'Set Number (Descending)' },
-            { value: 'theme_asc', label: 'Theme (Ascending)' },
-            { value: 'theme_desc', label: 'Theme (Descending)' },
-            { value: 'pieces_asc', label: 'Piece Count (Ascending)' },
-            { value: 'pieces_desc', label: 'Piece Count (Descending)' },
-            { value: 'minifigs_desc', label: 'Number of Minifigures' }
-        ];
+            <!-- Common sorting options -->
+            <%
+            const sortingOptions = [
+                { value: 'number_asc', label: 'Set Number (Ascending)' },
+                { value: 'number_desc', label: 'Set Number (Descending)' },
+                { value: 'theme_asc', label: 'Theme (Ascending)' },
+                { value: 'theme_desc', label: 'Theme (Descending)' },
+                { value: 'pieces_asc', label: 'Piece Count (Ascending)' },
+                { value: 'pieces_desc', label: 'Piece Count (Descending)' },
+                { value: 'minifigs_desc', label: 'Number of Minifigures' }
+            ];
 
-        if (currentPage === '/myCollection') {
-            sortingOptions.push(
-                { value: 'purchasePrice_asc', label: 'Purchase Price (Ascending)' },
-                { value: 'purchasePrice_desc', label: 'Purchase Price (Descending)' },
-                { value: 'acquisitionDate_asc', label: 'Acquisition Date (Ascending)' },
-                { value: 'acquisitionDate_desc', label: 'Acquisition Date (Descending)' }
-            );
-        } else if (currentPage === '/myWishList') {
-            sortingOptions.push(
-                { value: 'priority_desc', label: 'Priority' }
-            );
-        }
+            if (currentPage === '/myCollection') {
+                sortingOptions.push(
+                    { value: 'purchasePrice_asc', label: 'Purchase Price (Ascending)' },
+                    { value: 'purchasePrice_desc', label: 'Purchase Price (Descending)' },
+                    { value: 'acquisitionDate_asc', label: 'Acquisition Date (Ascending)' },
+                    { value: 'acquisitionDate_desc', label: 'Acquisition Date (Descending)' }
+                );
+            } else if (currentPage === '/myWishList') {
+                sortingOptions.push(
+                    { value: 'priority_desc', label: 'Priority' }
+                );
+            }
 
-        sortingOptions.forEach(option => {
-        %>
-            <option value="<%= option.value %>" <%= (sortBy !== undefined && sortBy === option.value) ? 'selected' : '' %>><%= option.label %></option>
-        <% }); %>
-    </select>
-</form>
+            sortingOptions.forEach(option => {
+            %>
+                <option value="<%= option.value %>" <%= (sortBy !== undefined && sortBy === option.value) ? 'selected' : '' %>><%= option.label %></option>
+            <% }); %>
+        </select>
+    </form>
+</div>

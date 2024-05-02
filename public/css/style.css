@@ -63,9 +63,7 @@
 /******************************************
 /* Utility Classes
 /*******************************************/
-.visually-hidden,
-.a11y-slider-prev,
-.a11y-slider-next {
+.visually-hidden{
     position: absolute;
     position: absolute !important;
     width: 1px !important;
@@ -80,6 +78,11 @@
 .flow > * + * {
     margin-top: var(--flow-spacer, var(--size-300));
 }
+
+.underline-border {
+    border-bottom: solid 1px black ;
+}
+
 
 /* Layout and Grid */
 .container {
@@ -329,6 +332,9 @@
 .padding-inline-700 {
     padding-inline: var(--size-700);
 }
+.padding-inline-800 {
+    padding-inline: var(--size-800);
+}
 .padding-inline-900 {
     padding-inline: var(--size-900);
 }
@@ -365,13 +371,18 @@ main {
 }
 
 .hero {
-    background-image: url("/images/collectionHero.jpg");
+    background-image: url("/images/collectionHeroSmall.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     height: 35rem;
-  
-    
 }
+
+@media (min-width: 769px) {
+    .hero {
+        background-image: url("/images/collectionHero.jpg");
+    }
+}
+
 
 .primary-navigation {
     display: flex;
@@ -381,6 +392,7 @@ main {
     border-bottom: solid 1px var(--clr-neutral-300) 0.1;
     box-shadow: 0 4px 8px rgba(121, 120, 120, 0.1);
     position: relative;
+    font-size: clamp(1.5rem, 2.4vw, 2.3rem);
 }
 
 footer{
@@ -411,12 +423,11 @@ footer{
     /* box-shadow: 0 -20px 22px rgb(149, 146, 146); */
 }
 
-
-
 .brick-nav-icon{
      height: 4rem;
      padding-right: 1rem;
 }
+
 .search-form{
      display: flex;
      border: 1px solid var(--clr-neutral-300);
@@ -434,6 +445,7 @@ footer{
     font-size: var(--fs-400);
 
 }
+
 
 /*  */
 .results-container{
@@ -508,6 +520,7 @@ footer{
     border: solid 1px var(--clr-neutral-300);
     border-radius: 2rem;
     padding: 1.4rem 2rem;
+    flex-shrink: 1;
     /* height: 30rem; */
 }
 
@@ -534,6 +547,19 @@ footer{
     background-color: var(--clr-neutral-300);
 }
 
+/* paging */
+.paging-container{
+ max-width: 50rem;
+ margin: 0 auto;
+}
+
+.pagination{
+    display: flex;
+    justify-content: space-between;
+    gap: 1.3rem;
+    text-overflow: ellipsis;
+    white-space: nowrap
+}
 
 /* popup details */
 .popup button{

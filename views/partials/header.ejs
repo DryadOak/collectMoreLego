@@ -12,7 +12,7 @@
                         <li class="my-collection nav-item"><a href="/userCollection/myCollection">My Collection</a></li>
                         <li class="my-wishlist nav-item"><a href="/userCollection/myWishList">Wishlist</a></li>
                     </ul>
-                    <form class="search-form" action="/brickSetApi/search" role="search" aria-label="search lego by themes or set">
+                    <form class="search-form" id="searchButton" action="/brickSetApi/search" role="search" aria-label="search lego by themes or set">
                         <input type="text" class="search-input" id="searchInput" name="searchInput" placeholder="Search Themes or Sets">
                         <button type="submit">
                             <svg xmlns="http://www.w3.org/2000/svg"  
@@ -22,6 +22,19 @@
                             </svg>
                         </button>
                     </form>
+                    <script>
+                        const searchInput = document.getElementById('searchInput');
+                        const searchButton = document.getElementById('searchButton');
+
+                        // Prevent form submission when search input is not expanded
+                        searchButton.addEventListener('click', function(event) {
+                            if (!searchInput.classList.contains('expanded')) {
+                                event.preventDefault();
+                                searchInput.classList.add('expanded');
+                                // You may want to add additional logic here, such as focusing the input
+                            }
+                        });
+                    </script>
                     </nav>
                 </div>
             </div>

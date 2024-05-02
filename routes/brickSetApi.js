@@ -17,14 +17,15 @@ router.get(
     '/search', 
     asyncHandler(async (req, res, next) => {
         const searchInput = req.query.searchInput;
-        console.log(searchInput)
-        const pageSize = 500;
-        const bricksetApiResponse = await fetch(`${baseURL}getSets?apiKey=${APIkey}&userHash=&params={'query':'${searchInput}','pageSize':${pageSize}}`);
+        const pageSize = 21; 
+        const pageNumber = parseInt(req.query.page) || 1;
+        const bricksetApiResponse = await fetch(`${baseURL}getSets?apiKey=${APIkey}&userHash=&params={'query':'${searchInput}','pageSize':${pageSize},'pageNumber':${pageNumber}}`);
         const bricksetApiData = await bricksetApiResponse.json();
-        console.log(bricksetApiData)
-        res.render('brickSetResults', { legoObject: bricksetApiData, searchInput: searchInput });
+        // console.log(bricksetApiData);
+        res.render('brickSetResults', { legoObject: bricksetApiData, searchInput: searchInput, pageNumber: pageNumber, pageSize: pageSize });
     }),
 );
+
 
 
 const updateThemesFromBricksetApi = async() => {
