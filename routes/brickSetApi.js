@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import asyncHandler from "express-async-handler";
 import expressLayouts from 'express-ejs-layouts';
 import { LegoTheme } from '../models/legoSetModel.js';
+import cron from 'node-cron'
 
 
 const router = express.Router();
@@ -64,7 +65,10 @@ const updateThemesFromBricksetApi = async() => {
 }
 
 
-// updateThemesFromBricksetApi();
-// set up to monthly in the night and test it doesnt overwrite imageURL
+// Schedule the function to run monthly
+cron.schedule('0 0 1 * *', async () => {
+    console.log('Running updateThemesFromBricksetApi...');
+    await updateThemesFromBricksetApi();
+});
 
 export default router;
