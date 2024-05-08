@@ -85,7 +85,6 @@ class FigureButtonHandler {
     }
 
     async editItem() {
-        // call loading functions on interactive btn
         const url = '/userCollection/updateItem';
         const method = 'PUT'
         const actionComplete = await this.performAction(url, method);
@@ -167,7 +166,6 @@ class DOMUtils {
         closeButton.textContent = 'x';
         closeButton.onclick = function() {
             document.body.removeChild(popup);
-            // Remove overlay when closing popup
             const overlay = document.querySelector('.overlay');
             if (overlay) {
                 document.body.removeChild(overlay);
@@ -261,10 +259,6 @@ class DOMUtils {
         editButton.textContent = 'Edit';
         editButton.classList.add('edit-button');
 
-        // const saveButton = document.createElement('button');
-        // saveButton.textContent = 'Save';
-        // saveButton.style.display = 'none';
-        // saveButton.classList.add('save-button');
         const saveButton = DOMUtils.createInteractiveButton()
         saveButton.style.display = 'none';
         
@@ -357,29 +351,6 @@ class DOMUtils {
     }
 }
 
-
-// function sortResults(){
-//     const sortOption = document.getElementById("sortBy").value
-//     const currentPage = window.location.pathname; // Getting the current page URL
-//     const currentPageName = currentPage.substring(currentPage.lastIndexOf('/') + 1); 
-//     console.log(sortOption)
-//     console.log(currentPage)
-//     console.log(currentPageName)
-    
-//         const url = `/userCollection/sortResults?sortOption=${sortOption}&currentPage=${currentPageName}`;
-//     try {
-//         fetch(url)
-//         .then(response => {
-//             if (!response.ok) {
-//                 throw new Error('Network response was not ok');
-//             }
-//         })
-//     } catch (error){
-//         throw new Error(`Failed to perform action: sort ${sortOption}`);
-//     }
-    
-// }
-
 document.addEventListener("DOMContentLoaded", () => {
     const sortByOptions = document.getElementById('sortBy')
     if(sortByOptions){
@@ -391,42 +362,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const currentYearElement = document.querySelector("#currentYear");
     const currentYear = new Date().getFullYear();
     currentYearElement.innerHTML += currentYear;
-
-    // Creates loading effect for smoother img rendering by adding an effect class
-    const blurDivs = document.querySelectorAll(".blur-load");
-    if (blurDivs.length > 0) {
-        applyLoadingEffect(blurDivs, "loaded");
-    }
-
-    function applyLoadingEffect(selector, effectClass) {
-        selector.forEach((effectDiv) => {
-            const img = effectDiv.querySelector("img");
-
-            function handleLoadEffect() {
-                effectDiv.classList.add(effectClass);
-            }
-
-            if (img.complete) {
-                handleLoadEffect();
-            } else {
-                img.addEventListener("load", handleLoadEffect);
-            }
-        });
-    }
-
-    
-
-    
-
-    
-        // displayNoResultsMessage() {
-        //     const noResultsMessage = document.createElement('p');
-        //     noResultsMessage.textContent = 'No matching sets found.';
-        //     this.resultsContainer.appendChild(noResultsMessage);
-        // }
-    
-    
-
 
 });
 
