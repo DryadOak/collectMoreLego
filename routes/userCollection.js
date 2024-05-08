@@ -175,10 +175,10 @@ router.get(
 );
 
 router.get(
-    '/myWishList', 
+    '/myWishlist', 
     asyncHandler(async (req, res, next) => {
          const legoObject = await fetchItemsFromDB(req, res, WishlistItem);
-         res.render('myWishlist', { legoObject: legoObject, currentPage: '/myWishList'})
+         res.render('myWishlist', { legoObject: legoObject, currentPage: '/myWishlist'})
     }),
 );
 
