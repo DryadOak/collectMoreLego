@@ -26,7 +26,7 @@ const addItemToDataBase = async (req, res, itemModel) => {
 
     const newItem = new itemModel(legoSet);
     const result = await newItem.save();
-    console.log('Document saved successfully:', result);
+    // console.log('Document saved successfully:', result);
 
     res.send(result);
 };
@@ -162,7 +162,7 @@ const fetchItemsFromDB = async (req, res, itemModel) => {
             };
             return legoObject
         }else {
-            console.log(`cant fetch ${itemModel.modelName}`)
+            // console.log(`cant fetch ${itemModel.modelName}`)
             return res.status(400).json({ error: `Can not get ${itemModel.modelName} from the data base.` });
         }
 }
@@ -200,7 +200,7 @@ router.post(
         let itemType;
         if (currentPage === 'myCollection') {
             itemType = CollectionItem;
-        } else if (currentPage === 'myWishList') {
+        } else if (currentPage === 'myWishlist') {
             itemType = WishlistItem;
         } else {
             throw new Error('Invalid current page');

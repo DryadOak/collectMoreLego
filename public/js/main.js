@@ -88,7 +88,7 @@ class FigureButtonHandler {
         const url = '/userCollection/updateItem';
         const method = 'PUT'
         const actionComplete = await this.performAction(url, method);
-        console.log(actionComplete)
+        // console.log(actionComplete)
         return actionComplete
     }
 
@@ -107,7 +107,7 @@ class FigureButtonHandler {
     }
 
     async performAction(url, method) {
-        console.log(this.buttonLabel)
+        // console.log(this.buttonLabel)
         const response = await fetch(url, {
             method: method,
             headers: {
@@ -123,7 +123,7 @@ class FigureButtonHandler {
         }
 
         const confirmation = await response.json();
-        console.log(confirmation)
+        // console.log(confirmation)
         return confirmation
     }
 }
