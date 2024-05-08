@@ -30,7 +30,7 @@ app.use('/brickSetApi', brickSetApiRouter);
 app.use('/userCollection', userCollectionRouter);
 
 app.get('/', (req, res) => {
-    res.redirect('/userCollection')
+    res.redirect('/userCollection/myCollection')
 });
 
 // Error handling middleware
