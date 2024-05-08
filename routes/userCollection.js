@@ -66,7 +66,6 @@ const sortResults = async (req, res, legoObjects) => {
         }
 
         const sortOption = req.body.sortBy;
-        console.log(sortOption)
         const [sortKey, sortOrder] = sortOption.split('_');
 
        const compareFunction = (a, b) => {
@@ -141,7 +140,6 @@ router.delete('/deleteItem', asyncHandler(async (req, res) => {
 }));
 
 router.put('/updateItem', asyncHandler(async (req, res) => {
-    console.log(req.body.set)
     await updateItemInDataBase(req, res);
 }));
 
@@ -198,9 +196,6 @@ router.post(
         const currentPage = req.query.currentPage;
         const sortBy = req.body.sortBy;
 
-        console.log('Current Page:', currentPage);
-        console.log('Sort By:', sortBy);
-
         // Determine the item type based on the current page
         let itemType;
         if (currentPage === 'myCollection') {
@@ -216,11 +211,9 @@ router.post(
 
         // Sort the fetched items
         const sortedLegoObjects = await sortResults(req, res, legoObjects);
-        console.log('Sorted Lego Objects:', sortedLegoObjects);
 
         // Render the sorted results using EJS or send as JSON
         const formattedCurrentPage = `/${currentPage}`;
-        console.log('Formatted Current Page:', formattedCurrentPage);
         res.render(`${currentPage}`, { legoObject: sortedLegoObjects, currentPage: formattedCurrentPage, sortBy: sortBy });
     })
 );
