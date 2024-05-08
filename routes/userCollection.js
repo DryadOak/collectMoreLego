@@ -185,10 +185,10 @@ router.get(
 );
 
 router.get(
-    '/themes', 
+    '/', 
     asyncHandler(async (req, res, next) => {
         const legoThemesObject = await fetchItemsFromDB(req, res, LegoTheme);
-        res.render('brickSetThemes', { legoObject: legoThemesObject });
+        res.render('index', { legoObject: legoThemesObject });
     }),
 )
 

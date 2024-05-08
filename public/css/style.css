@@ -80,7 +80,7 @@
 }
 
 .underline-border {
-    border-bottom: solid 1px black ;
+    border-bottom: solid 1px var(--clr-neutral-600) ;
 }
 
 
@@ -446,6 +446,21 @@ footer{
 
 }
 
+.search-form button{
+        margin-left: auto ;
+    }
+
+@media (max-width: 658px){
+    .primary-navigation{
+        flex-wrap: wrap;
+    }
+
+    .search-form {
+        width: calc(100vw - 4rem); /* Make search form take full width */
+    }
+}
+
+
 
 /*  */
 .results-container{
@@ -453,23 +468,36 @@ footer{
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr) );
      
     }
-    /*  */
-    #sortBy{
-        padding: .3rem;
-        border-radius: .7rem;
-        border: 1px solid var(--clr-neutral-300);
-    }
-    #sortBy option:hover{
-        color: var(--clr-neutral-600);
-    }
+
+#sortBy{
+    padding: .3rem;
+    border-radius: .7rem;
+    border: 1px solid var(--clr-neutral-300);
+}
+#sortBy option:hover{
+    color: var(--clr-neutral-600);
+}
 .sortContainer{
     height: 20rem;
 }
 .sort-form{
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
 }
 
+@media (min-width: 510px){
+    .sort-form{
+    justify-content: flex-end;
+}
+    .flex-container{
+        display: flex;
+        align-items: center;
+    }
+    
+    .flex-container > div:last-child {
+        margin-left: auto;
+    }
+}
 .collection-stats-container{
     border: 1px solid var(--clr-neutral-100);
     border-radius: .5rem;
@@ -481,14 +509,7 @@ footer{
    padding: 1rem;
 }
 
-.flex-container{
-    display: flex;
-    align-items: center;
-}
 
-.flex-container > div:last-child {
-    margin-left: auto;
-}
 
 /* theme and set cards */
 .themeFigcaption{
@@ -513,7 +534,7 @@ footer{
 .set-card img{
     object-fit: contain;
     margin: 0 auto;
-    height: 17rem;
+    max-height: 17rem;
 }
 
 .set-card{
@@ -521,14 +542,12 @@ footer{
     border-radius: 2rem;
     padding: 1.4rem 2rem;
     flex-shrink: 1;
-    /* height: 30rem; */
 }
 
 .set-card figcaption{
     margin-top: 1.7rem;
     display: flex;
     justify-content: space-between;
-    white-space: nowrap;
 }
 
 @media (min-width: 53em) {
@@ -537,7 +556,8 @@ footer{
     }
 }
 
-.set-card button, .popup button{
+.set-card button,
+.popup button{
     border: solid 1px var(--clr-neutral-300);
     border-radius: .6rem;
     padding: 0 .6rem;
