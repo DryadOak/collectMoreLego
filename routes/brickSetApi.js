@@ -27,9 +27,6 @@ router.get(
     }),
 );
 
-
-
-
 const updateThemesFromBricksetApi = async() => {
     try {
         const bricksetApiResponse = await fetch(`https://brickset.com/api/v3.asmx/getThemes?apiKey=${APIkey}`);

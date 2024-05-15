@@ -11,7 +11,9 @@
             <% legoObject.sets.forEach(function(set) { %>
                 <%- include('partials/legoSetFigurePartial', {set: set, buttonTypes: ['Collection', 'Wishlist']}) %>
             <% }); %>
-        <% } else { %>
+        <% } else if(legoObject.status === 'error'){ %>
+            <p>Message: <%= legoObject.message %></p>
+        <% }else { %>
             <p>No matching sets found.</p>
         <% } %>
     </div>
