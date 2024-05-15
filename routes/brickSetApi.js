@@ -20,12 +20,13 @@ router.get(
         const searchInput = req.query.searchInput;
         const pageSize = 21; 
         const pageNumber = parseInt(req.query.page) || 1;
-        const bricksetApiResponse = await fetch(`${baseURL}getSets?apiKey=${APIkey}&userHash=&params={'query':'${searchInput}','pageSize':${pageSize},'pageNumber':${pageNumber}}`);
+        const orderBy = req.query.orderBy || 'RatingDESC';
+        const bricksetApiResponse = await fetch(`${baseURL}getSets?apiKey=${APIkey}&userHash=&params={'query':'${searchInput}','orderBy':'${orderBy}','pageSize':${pageSize},'pageNumber':${pageNumber}}`);
         const bricksetApiData = await bricksetApiResponse.json();
-        // console.log(bricksetApiData);
-        res.render('brickSetResults', { legoObject: bricksetApiData, searchInput: searchInput, pageNumber: pageNumber, pageSize: pageSize });
+        res.render('brickSetResults', { legoObject: bricksetApiData, searchInput: searchInput, pageNumber: pageNumber, pageSize: pageSize, orderBy: orderBy });
     }),
 );
+
 
 
 

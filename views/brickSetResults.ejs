@@ -1,6 +1,11 @@
 <% legoObject = typeof legoObject !== 'undefined' ? legoObject : false %>
 <section class="container padding-block-600">
     <h1 class="fs-primary-heading fw-semi-bold padding-block-700 padding-inline-900">Results for <span class="fw-bold"><%- searchInput %></span></h1>
+    <div id="sortContainer" class="padding-block-600">
+                <div>
+                    <%- include('partials/brickSetApiOrderBy', { searchInput: searchInput, pageNumber: pageNumber, orderBy: orderBy }) %>
+                </div>
+            </div>
     <div id="results-container" class="even-columns container padding-block-700">
         <% if (legoObject.status === 'success' && legoObject.matches > 0) { %>
             <% legoObject.sets.forEach(function(set) { %>
@@ -16,7 +21,7 @@
         <ul class="pagination">
             <% if (pageNumber > 1) { %>
                 <li class="page-item">
-                    <a class="page-link" href="?searchInput=<%= searchInput %>&page=<%= pageNumber - 1 %>">
+                    <a class="page-link" href="?searchInput=<%= searchInput %>&page=<%= pageNumber - 1 %>&orderBy=<%= orderBy %>">
                         &#9664; <!-- Unicode character for left arrow -->
                     </a>
                 </li>
@@ -32,7 +37,7 @@
             <% } %>
             <% for (let i = startPage; i <= endPage; i++) { %>
                 <li class="page-item <%= i === pageNumber ? 'active' : '' %>">
-                    <a class="page-link <%= i === pageNumber ? 'underline-border' : '' %>" href="?searchInput=<%= searchInput %>&page=<%= i %>"><%= i %></a>
+                    <a class="page-link <%= i === pageNumber ? 'underline-border' : '' %>" href="?searchInput=<%= searchInput %>&page=<%= i %>&orderBy=<%= orderBy %>"><%= i %></a>
                 </li>
             <% } %>
             <% if (endPage < totalPages) { %>
@@ -42,7 +47,7 @@
             <% } %>
             <% if (pageNumber < totalPages) { %>
                 <li class="page-item">
-                    <a class="page-link" href="?searchInput=<%= searchInput %>&page=<%= pageNumber + 1 %>">
+                    <a class="page-link" href="?searchInput=<%= searchInput %>&page=<%= pageNumber + 1 %>&orderBy=<%= orderBy %>">
                         &#9654; <!-- Unicode character for right arrow -->
                     </a>
                 </li>

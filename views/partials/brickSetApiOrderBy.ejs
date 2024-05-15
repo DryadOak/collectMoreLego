@@ -1,0 +1,35 @@
+<% orderBy = typeof orderBy !== 'undefined' ? orderBy : false %>
+<div class="container">
+    <form class="sort-form fs-400 padding-inline-300" action="/brickSetApi/search?searchInput=<%= searchInput %>" method="get">
+        <input type="hidden" name="searchInput" value="<%= searchInput %>">
+        <input type="hidden" name="page" value="<%= pageNumber %>">
+        <select id="sortBy" name="orderBy">
+            <option value="" <%= !orderBy ? 'selected' : '' %> disabled>Sort By:</option>
+
+            <%
+            const sortingOptions = [
+                { value: 'Number', label: 'Set Number (Ascending)' },
+                { value: 'NumberDESC', label: 'Set Number (Descending)' },
+                { value: 'YearFrom', label: 'Year (Ascending)' },
+                { value: 'YearFromDESC', label: 'Year (Descending)' },
+                { value: 'Pieces', label: 'Pieces (Ascending)' },
+                { value: 'PiecesDESC', label: 'Pieces (Descending)' },
+                { value: 'Minifigs', label: 'Minifigs (Ascending)' },
+                { value: 'MinifigsDESC', label: 'Minifigs (Descending)' },
+                { value: 'UKRetailPrice', label: 'Retail Price (Ascending)' },
+                { value: 'UKRetailPriceDESC', label: 'Retail Price (Descending)' },
+                { value: 'Name', label: 'Name (Ascending)' },
+                { value: 'NameDESC', label: 'Name (Descending)' },
+                { value: 'Rating', label: 'Rating (Ascending)' },
+                { value: 'RatingDESC', label: 'Rating (Descending)' },
+                { value: 'UserRating', label: 'User Rating (Ascending)' },
+                { value: 'UserRatingDESC', label: 'User Rating (Descending)' },
+            ];
+
+            sortingOptions.forEach(option => {
+            %>
+                <option value="<%= option.value %>" <%= (orderBy !== undefined && orderBy === option.value) ? 'selected' : '' %>><%= option.label %></option>
+            <% }); %>
+        </select>
+    </form>
+</div>
