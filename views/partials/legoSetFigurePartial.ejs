@@ -1,7 +1,7 @@
 <div class="set-card">
     <figure>
         <div class="img-container">
-            <img src="<%= set.image.imageURL || '/images/placeholder.jpg' %>" alt="<%= set.name %>">
+            <img src="<%= `https://img.bricklink.com/ItemImage/SN/0/${set.number}-1.png` || '/images/placeholder.jpg' %>" alt="<%= set.name %>">
         </div>
         <figcaption>
             <h2 class="fw-semi-bold"><%= set.name %>: <%= set.number %></h2>

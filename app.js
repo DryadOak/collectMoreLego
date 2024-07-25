@@ -7,6 +7,7 @@ import expressLayouts from 'express-ejs-layouts';
 import fetch from 'node-fetch';
 import brickSetApiRouter from './routes/brickSetApi.js';
 import userCollectionRouter from './routes/userCollection.js';
+import { startUpdateThemesScheduler }  from './services/updateThemesScheduler.js'
 
 dotenv.config();
 const uri = `mongodb+srv://${process.env.MONGO_DB_USERNAME}:${process.env.MONGO_DB_PASSWORD}@collectmorelego.ocgvfre.mongodb.net/collectMoreLego?retryWrites=true&w=majority`;
@@ -42,3 +43,6 @@ app.use((error, req, res, next) => {
 app.listen(PORT, () => {
     console.log(`server running on port ${PORT}`);
 });
+
+
+// startUpdateThemesScheduler()
