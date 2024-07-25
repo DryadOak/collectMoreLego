@@ -365,3 +365,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
+// Fallback image
+document.addEventListener('DOMContentLoaded', function() {
+    const images = document.querySelectorAll('.lego-image');
+    
+    images.forEach(function(img) {
+      img.onerror = function() {
+        img.src = '/images/default_logo.svg'; 
+      };
+    });
+  });
