@@ -8,7 +8,7 @@ dotenv.config();
 const APIkey = process.env.BRICKSET_API_KEY;
 const baseURL = 'https://brickset.com/api/v3.asmx/'
 
-export const search = asyncHandler(async (req, res, next) => {
+export const searchBricksetAPI = asyncHandler(async (req, res, next) => {
     const searchInput = req.query.searchInput;
     const pageSize = 21; 
     const pageNumber = parseInt(req.query.page) || 1;

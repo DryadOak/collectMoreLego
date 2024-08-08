@@ -489,6 +489,7 @@ footer{
 
 .set-card .img-container{
     height: 17rem;
+    padding: .5rem 0;
 }
 
 .set-card figure{
@@ -498,7 +499,7 @@ footer{
 }
 
 .set-card figcaption{
-    margin-top: 1.7rem;
+    margin-top: 1.3rem;
     display: flex;
     justify-content: space-between;
     flex-shrink: 0;
