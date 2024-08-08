@@ -1,6 +1,6 @@
 # Collect More Lego
 
-This is a little side projects I started to keep track of my Lego collection using the Brickset API. Please allow 50 seconds for initial spin up after inactivity. (Hopefully my partner never sees how much money I've spent on little bits of plastic. If you are reading this, I definitely won more than half of them in a giveaway, promise).
+This is a little side project I started to keep track of my Lego collection using the Brickset API. Please allow 50 seconds for initial spin up after inactivity. (Hopefully my partner never sees how much money I've spent on little bits of plastic. If you are reading this, I definitely won more than half of them in a giveaway, promise).
 
 **Full Website:** https://collectmorelego.onrender.com/
 
