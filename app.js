@@ -1,7 +1,11 @@
 import express from "express";
 import dotenv from 'dotenv';
 import path from 'path';
-import mongoose from "mongoose";
+import session from 'express-session';
+import MongoStore from 'connect-mongo';
+import mongoose from 'mongoose';
+import passport from 'passport';
+import logger from 'morgan'
 import bodyParser from 'body-parser';
 import expressLayouts from 'express-ejs-layouts';
 import fetch from 'node-fetch';
@@ -27,8 +31,28 @@ app.use(express.static("public"));
 app.use(expressLayouts);
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(logger('dev'))
+// Sessions
+app.use(
+    session({
+      secret: process.env.SESSION_SECRET,
+      resave: false,
+      saveUninitialized: false,
+      store: MongoStore.create({
+      client: mongoose.connection.getClient(),
+      collectionName: 'sessions',
+      }),
+    })
+  )
+  
+// Passport middleware
+app.use(passport.initialize())
+app.use(passport.session())
+
+
 app.use('/brickSetApi', brickSetApiRouter);
 app.use('/userCollection', userCollectionRouter);
+
 
 app.get('/', (req, res) => {
     res.redirect('/userCollection/myCollection')
