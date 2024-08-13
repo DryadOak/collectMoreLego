@@ -26,7 +26,6 @@ app.set('views', path.join(process.cwd(), 'views'));
 app.set("layout", "layouts/layout");
 const PORT = process.env.PORT || 3000;
 
-
 app.use(express.static("public"));
 app.use(expressLayouts);
 app.use(express.json());
