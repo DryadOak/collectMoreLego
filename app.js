@@ -6,6 +6,7 @@ import MongoStore from 'connect-mongo';
 import mongoose from 'mongoose';
 import passport from 'passport';
 import logger from 'morgan'
+import connectDB from './config/database.js'
 import bodyParser from 'body-parser';
 import expressLayouts from 'express-ejs-layouts';
 import fetch from 'node-fetch';
@@ -13,11 +14,9 @@ import brickSetApiRouter from './routes/brickSetApi.js';
 import userCollectionRouter from './routes/userCollection.js';
 import { startUpdateThemesScheduler }  from './services/updateThemesScheduler.js'
 
-dotenv.config();
-const uri = `mongodb+srv://${process.env.MONGO_DB_USERNAME}:${process.env.MONGO_DB_PASSWORD}@collectmorelego.ocgvfre.mongodb.net/collectMoreLego?retryWrites=true&w=majority`;
-mongoose.connect(uri)
-    .then((result) => console.log('connected to db'))
-    .catch((error) => console.log('failed to connect to db: ' + error))
+dotenv.config({path: './config/.env'});
+
+connectDB()
 
 
 const app = express();
