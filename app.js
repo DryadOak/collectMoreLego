@@ -5,16 +5,22 @@ import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import mongoose from 'mongoose';
 import passport from 'passport';
+import flash from 'express-flash'
 import logger from 'morgan'
 import connectDB from './config/database.js'
 import bodyParser from 'body-parser';
 import expressLayouts from 'express-ejs-layouts';
 import fetch from 'node-fetch';
+import mainRouter from './routes/main.js'
 import brickSetApiRouter from './routes/brickSetApi.js';
 import userCollectionRouter from './routes/userCollection.js';
 import { startUpdateThemesScheduler }  from './services/updateThemesScheduler.js'
+import passportConfig from './config/passport.js'
+
 
 dotenv.config({path: './config/.env'});
+
+passportConfig(passport)
 
 connectDB()
 
@@ -47,7 +53,8 @@ app.use(
 app.use(passport.initialize())
 app.use(passport.session())
 
-
+app.use(flash())
+app.use('/', mainRouter)
 app.use('/brickSetApi', brickSetApiRouter);
 app.use('/userCollection', userCollectionRouter);
 

@@ -3,7 +3,7 @@ import asyncHandler from "express-async-handler";
 import { LegoTheme } from '../models/legoSetModel.js';
 
 
-dotenv.config();
+dotenv.config({path: './config/.env'});
 
 const APIkey = process.env.BRICKSET_API_KEY;
 const baseURL = 'https://brickset.com/api/v3.asmx/'

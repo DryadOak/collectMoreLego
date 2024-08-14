@@ -9,6 +9,10 @@ dotenv.config();
 
 export const addItemToDataBase = async (req, res, itemModelType) => {
     const legoSet = req.body.set;
+    console.log(req.user)
+    const userId = req.user.id;  
+    legoSet.userId = userId;
+    
     let itemModel = itemModelType === 'CollectionItem' ? CollectionItem : WishlistItem
     // Ensure that required fields are present
     if (!legoSet || !legoSet.setID || !legoSet.name || !legoSet.number) {
@@ -26,6 +30,7 @@ export const addItemToDataBase = async (req, res, itemModelType) => {
 
     res.send(result);
 };
+// look at other example and see how to change below functions to user the userId
 
 export const removeItemFromDataBase = async (req, res) => {
     

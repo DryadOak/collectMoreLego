@@ -12,6 +12,7 @@
   "author": "oak",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
     "connect-mongo": "^5.1.0",
     "dotenv": "^16.3.1",
@@ -20,12 +21,15 @@
     "express": "^4.18.2",
     "express-async-handler": "^1.2.0",
     "express-ejs-layouts": "^2.5.1",
+    "express-flash": "^0.0.2",
     "express-session": "^1.18.0",
     "mongodb": "^6.3.0",
     "mongoose": "^8.5.2",
     "node-cron": "^3.0.3",
     "node-fetch": "^3.3.2",
-    "passport": "^0.7.0"
+    "passport": "^0.7.0",
+    "passport-local": "^1.0.0",
+    "validator": "^13.12.0"
   },
   "devDependencies": {
     "morgan": "^1.10.0",

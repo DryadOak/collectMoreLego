@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 const legoSetSchema = new Schema({
+    userId: { type: String, required: true },
     setID: { type: String, required: true },
     number: { type: String, required: true },
     name: { type: String, required: true },
