@@ -56,7 +56,7 @@ app.use(passport.session())
 app.use(flash())
 app.use('/', mainRouter)
 app.use('/brickSetApi', brickSetApiRouter);
-app.use('/userCollection', userCollectionRouter);
+app.use('/userCollection', ensureAuth, userCollectionRouter);
 
 
 app.get('/', (req, res) => {
