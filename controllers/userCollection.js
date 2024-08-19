@@ -30,7 +30,6 @@ export const addItemToDataBase = async (req, res, itemModelType) => {
 
     res.send(result);
 };
-// look at other example and see how to change below functions to user the userId
 
 export const removeItemFromDataBase = async (req, res) => {
     
@@ -59,8 +58,11 @@ export const updateItemInDataBase = async (req, res) => {
     res.json({ message: 'Item updated successfully' });
 }
 
-export const fetchItemsFromDB = async (req, res, itemModel) => {
-    const items = await itemModel.find();
+export const fetchItemsFromDB = async (req, res, itemModel, filterByUser = true) => {
+
+    const query = filterByUser ? { userId: req.user.id } : {};
+
+    const items = await itemModel.find(query);
         if (items.length > 0) {
             const legoObject = {
                 status: 'success',
@@ -93,7 +95,7 @@ export const getUserWishlist = async (req, res) => {
 };
 
 export const getLegoThemes = async (req, res) => {
-    const legoThemesObject = await fetchItemsFromDB(req, res, LegoTheme);
+    const legoThemesObject = await fetchItemsFromDB(req, res, LegoTheme, false);
     res.render('index', { legoObject: legoThemesObject });
 };
 
