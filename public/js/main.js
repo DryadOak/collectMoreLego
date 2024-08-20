@@ -377,22 +377,35 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
 // //   login / signup
-const signInBtn = document.getElementById("signIn");
-const signUpBtn = document.getElementById("signUp");
-const fistForm = document.getElementById("form1");
-const secondForm = document.getElementById("form2");
-const loginContainer = document.querySelector(".login-form-container");
+// embed flash messages into dom without refresh - style a message area for them for it remain consistant - no flicking forms - also add logout option
 
-signInBtn.addEventListener("click", () => {
-	loginContainer.classList.remove("right-panel-active");
+document.addEventListener("DOMContentLoaded", () => {
+    const signInBtn = document.getElementById("signIn");
+    const signUpBtn = document.getElementById("signUp");
+    const firstForm = document.getElementById("form1");
+    const secondForm = document.getElementById("form2");
+    const loginContainer = document.querySelector(".login-form-container");
+
+    signInBtn.addEventListener("click", (e) => {
+        if (loginContainer.classList.contains("right-panel-active")) {
+            loginContainer.classList.remove("right-panel-active");
+            e.preventDefault(); // Prevent form submission if switching panels
+        } else {
+            secondForm.submit(); // Submit the sign-in form
+        }
+    });
+
+    signUpBtn.addEventListener("click", (e) => {
+        if (!loginContainer.classList.contains("right-panel-active")) {
+            loginContainer.classList.add("right-panel-active");
+            e.preventDefault(); // Prevent form submission if switching panels
+        } else {
+            firstForm.submit(); // Submit the sign-up form
+        }
+    });
 });
 
-signUpBtn.addEventListener("click", () => {
-	loginContainer.classList.add("right-panel-active");
-});
 
-fistForm.addEventListener("submit", (e) => e.preventDefault());
-secondForm.addEventListener("submit", (e) => e.preventDefault());
 
 
 

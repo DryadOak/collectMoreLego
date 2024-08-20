@@ -101,7 +101,7 @@ export const postSignup = async (req, res, next) => {
 
     if (existingUser) {
       req.flash('errors', { msg: 'Account with that email address or username already exists.' });
-      return res.redirect('../signup');
+      return res.redirect('../login');
     }
 
     const user = new User({
