@@ -1,9 +1,3 @@
-// need to create index view with sign in/up and change .render in this file to match
-// change scema so collection/ wishlist have the user.id attached to it linking it to them (this should be the _id for user added as a user.id property on the let set in collection)
-// ensure this is set up correctly - routes, checks etc
-// change index to login / sign up page - put themes in themes file instead
-// chage userCollection controller to remove based on user.id
-
 import passport from 'passport';
 import validator from 'validator';
 import User from '../models/User.js';
@@ -68,14 +62,14 @@ export const logout = (req, res, next) => {
   });
 };
 
-export const getSignup = (req, res) => {
-  if (req.user) {
-    return res.redirect('/userCollection');
-  }
-  res.render('signup', {
-    title: 'Create Account',
-  });
-};
+// export const getSignup = (req, res) => {
+//   if (req.user) {
+//     return res.redirect('/userCollection');
+//   }
+//   res.render('signup', {
+//     title: 'Create Account',
+//   });
+// };
 
 export const postSignup = async (req, res, next) => {
   const validationErrors = [];
@@ -92,7 +86,7 @@ export const postSignup = async (req, res, next) => {
 
   if (validationErrors.length) {
     req.flash('errors', validationErrors);
-    return res.redirect('../signup');
+    return res.redirect('../login');
   }
 
   req.body.email = validator.normalizeEmail(req.body.email, { gmail_remove_dots: false });

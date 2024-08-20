@@ -96,7 +96,7 @@ export const getUserWishlist = async (req, res) => {
 
 export const getLegoThemes = async (req, res) => {
     const legoThemesObject = await fetchItemsFromDB(req, res, LegoTheme, false);
-    res.render('index', { legoObject: legoThemesObject });
+    res.render('themes', { legoObject: legoThemesObject });
 };
 
 const sortResults = async (req, res, legoObjects) => {

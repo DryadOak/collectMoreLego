@@ -375,3 +375,24 @@ document.addEventListener('DOMContentLoaded', function() {
       };
     });
   });
+
+// //   login / signup
+const signInBtn = document.getElementById("signIn");
+const signUpBtn = document.getElementById("signUp");
+const fistForm = document.getElementById("form1");
+const secondForm = document.getElementById("form2");
+const loginContainer = document.querySelector(".login-form-container");
+
+signInBtn.addEventListener("click", () => {
+	loginContainer.classList.remove("right-panel-active");
+});
+
+signUpBtn.addEventListener("click", () => {
+	loginContainer.classList.add("right-panel-active");
+});
+
+fistForm.addEventListener("submit", (e) => e.preventDefault());
+secondForm.addEventListener("submit", (e) => e.preventDefault());
+
+
+

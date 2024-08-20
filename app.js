@@ -16,6 +16,7 @@ import brickSetApiRouter from './routes/brickSetApi.js';
 import userCollectionRouter from './routes/userCollection.js';
 import { startUpdateThemesScheduler }  from './services/updateThemesScheduler.js'
 import passportConfig from './config/passport.js'
+import { ensureAuth} from './middleware/auth.js';
 
 
 dotenv.config({path: './config/.env'});
@@ -55,7 +56,7 @@ app.use(passport.session())
 
 app.use(flash())
 app.use('/', mainRouter)
-app.use('/brickSetApi', brickSetApiRouter);
+app.use('/brickSetApi', ensureAuth, brickSetApiRouter);
 app.use('/userCollection', ensureAuth, userCollectionRouter);
 
 
