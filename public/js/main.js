@@ -378,7 +378,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // //   login / signup
 // embed flash messages into dom without refresh - style a message area for them for it remain consistant - no flicking forms - also add logout option
-
+// only works when in ejs file - timing reason
 // document.addEventListener("DOMContentLoaded", () => {
 //     console.log('JavaScript loaded');
 //     const signInBtn = document.getElementById("signIn");
