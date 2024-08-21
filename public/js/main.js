@@ -379,33 +379,81 @@ document.addEventListener('DOMContentLoaded', function() {
 // //   login / signup
 // embed flash messages into dom without refresh - style a message area for them for it remain consistant - no flicking forms - also add logout option
 
-document.addEventListener("DOMContentLoaded", () => {
-    const signInBtn = document.getElementById("signIn");
-    const signUpBtn = document.getElementById("signUp");
-    const firstForm = document.getElementById("form1");
-    const secondForm = document.getElementById("form2");
-    const loginContainer = document.querySelector(".login-form-container");
+// document.addEventListener("DOMContentLoaded", () => {
+//     console.log('JavaScript loaded');
+//     const signInBtn = document.getElementById("signIn");
+//     const signUpBtn = document.getElementById("signUp");
+//     const firstForm = document.getElementById("form1");
+//     const secondForm = document.getElementById("form2");
+//     const loginContainer = document.querySelector(".login-form-container");
 
-    signInBtn.addEventListener("click", (e) => {
-        if (loginContainer.classList.contains("right-panel-active")) {
-            loginContainer.classList.remove("right-panel-active");
-            e.preventDefault(); // Prevent form submission if switching panels
-        } else {
-            secondForm.submit(); // Submit the sign-in form
-        }
-    });
+//     signInBtn.addEventListener("click", async (e) => {
+//         e.preventDefault()
+//         if (loginContainer.classList.contains("right-panel-active")) {
+//             loginContainer.classList.remove("right-panel-active");
+//              // Prevent form submission if switching panels
+//         } else {
+//              // Prevent the default form submission
+//             await handleFormSubmit(secondForm, '/login');
+//         }
+//     });
 
-    signUpBtn.addEventListener("click", (e) => {
-        if (!loginContainer.classList.contains("right-panel-active")) {
-            loginContainer.classList.add("right-panel-active");
-            e.preventDefault(); // Prevent form submission if switching panels
-        } else {
-            firstForm.submit(); // Submit the sign-up form
-        }
-    });
-});
+//     signUpBtn.addEventListener("click", async (e) => {
+//         e.preventDefault()
+//         if (!loginContainer.classList.contains("right-panel-active")) {
+//             loginContainer.classList.add("right-panel-active");
+//              // Prevent form submission if switching panels
+//         } else {
+//              // Prevent the default form submission
+//             await handleFormSubmit(firstForm, '/signup'); 
+//         }
+//     });
+
+//     async function handleFormSubmit(form, url) {
+//         const formData = new FormData(form);
+//         const data = Object.fromEntries(formData.entries());
+//         console.log(data)
+
+//         try {
+//             const response = await fetch(url, {
+//                 method: 'POST',
+//                 headers: {
+//                     'Content-Type': 'application/json'
+//                 },
+//                 body: JSON.stringify(data)
+//             });
+
+//             const result = await response.json();
+//             console.log('Response:', result);
+
+//             if (result.errors) {
+//                 // Redirect to another page if successful
+//                 window.location.href = result.redirectUrl;
+//             } else {
+//                 // Display errors
+//                 displayErrors(result.errors);
+//             }
+//         } catch (error) {
+//             console.error('Error:', error);
+//         }
+//     }
+
+//     function displayErrors(errors) {
+//         const container = document.getElementById('flashMessages');
+//         container.innerHTML = ''; // Clear previous errors
+//         console.log(errors)
+//         errors.forEach(error => {
+//             const errorDiv = document.createElement('div');
+//             errorDiv.className = 'alert alert-danger';
+//             errorDiv.textContent = error.msg;
+//             container.appendChild(errorDiv);
+//         });
+//     }
+// });
 
 
+
+    
 
 
 

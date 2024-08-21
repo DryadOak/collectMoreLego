@@ -12,6 +12,7 @@ export const getLogin = (req, res) => {
 };
 
 export const postLogin = (req, res, next) => {
+  console.log(req.body);
   const validationErrors = [];
   if (!validator.isEmail(req.body.email)) {
     validationErrors.push({ msg: 'Please enter a valid email address.' });
@@ -22,7 +23,8 @@ export const postLogin = (req, res, next) => {
 
   if (validationErrors.length) {
     req.flash('errors', validationErrors);
-    return res.redirect('/login');
+    console.log(validationErrors)
+    return res.status(400).json({ errors: validationErrors });
   }
   req.body.email = validator.normalizeEmail(req.body.email, { gmail_remove_dots: false });
 
@@ -32,14 +34,14 @@ export const postLogin = (req, res, next) => {
     }
     if (!user) {
       req.flash('errors', info);
-      return res.redirect('/login');
+      return res.status(400).json({ errors: info });
     }
     req.logIn(user, (err) => {
       if (err) {
         return next(err);
       }
       req.flash('success', { msg: 'Success! You are logged in.' });
-      res.redirect(req.session.returnTo || '/userCollection');
+      return res.status(200).json({ success: 'Success! You are logged in.', redirectUrl: '/userCollection' });
     });
   })(req, res, next);
 };
@@ -86,7 +88,7 @@ export const postSignup = async (req, res, next) => {
 
   if (validationErrors.length) {
     req.flash('errors', validationErrors);
-    return res.redirect('../login');
+    return res.status(400).json({ errors: validationErrors });
   }
 
   req.body.email = validator.normalizeEmail(req.body.email, { gmail_remove_dots: false });
@@ -101,7 +103,7 @@ export const postSignup = async (req, res, next) => {
 
     if (existingUser) {
       req.flash('errors', { msg: 'Account with that email address or username already exists.' });
-      return res.redirect('../login');
+      return res.status(400).json({ errors: [{ msg: 'Account with that email address or username already exists.' }] });
     }
 
     const user = new User({
@@ -116,7 +118,7 @@ export const postSignup = async (req, res, next) => {
       if (err) {
         return next(err);
       }
-      res.redirect('/userCollection');
+      return res.status(200).json({ success: 'Success! You are logged in.', redirectUrl: '/userCollection' });
     });
 
   } catch (err) {

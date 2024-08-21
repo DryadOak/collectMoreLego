@@ -1,47 +1,27 @@
  <!-- improve login style, include link to sign-up, incude guest username and PW on git hub -->
- <% if (locals.messages.errors) { %>
-        <% messages.errors.forEach( el => { %>
-            <div class="alert alert-danger"><%= el.msg %></div>
-        <% }) %>    
-    <% } %>
-    <% if (locals.messages.info) { %>
-        <% messages.info.forEach( el => { %>
-            <div class="alert alert-danger"><%= el.msg %></div>
-        <% }) %>    
-    <% } %>
-    <!-- <form action="/signup" method="POST">
-        <input type="text" name="userName" placeholder="User Name">
-        <input type="email" name="email" placeholder="Email">
-        <input type="password" name="password" placeholder="Password">
-        <input type="password" name="confirmPassword" placeholder="Confirm Password">
-        <input type="submit">
-    </form> -->
-    <!-- <form action="/login" method="POST">
-        <input type="email" name="email" placeholder="Email">
-        <input type="password" name="password" placeholder="Password">
-        <input type="submit">
-    </form> -->
+ 
+<div id="flashMessages"></div>
 <div class="login-container">
     <div class="login-form-container right-panel-active">
         <!-- Sign Up -->
         <div class="container__form container--signup">
-            <form action="/signup" class="form" id="form1" method="POST">
+            <form id="form1" class="form" action="/signup" method="POST">
                 <h2 class="form__title">Sign Up</h2>
                 <input type="text" name="userName" placeholder="User" class="input" />
                 <input type="email" name="email" placeholder="Email" class="input" />
                 <input type="password" name="password" placeholder="Password" class="input" />
                 <input type="password" name="confirmPassword" placeholder="Confirm Password" class="input" />
-                <button class="btn" type="submit">Sign Up</button>
+                <button type="submit" class="btn">Sign Up</button>
             </form>
         </div>
             
         <!-- Sign In -->
         <div class="container__form container--signin">
-            <form action="/login" method="POST" class="form" id="form2">
+            <form id="form2" class="form" action="/login" method="POST">
                 <h2 class="form__title">Sign In</h2>
                 <input type="email" name="email" placeholder="Email" class="input" />
                 <input type="password" name="password" placeholder="Password" class="input" />
-                <button class="btn" type="submit">Sign In</button>
+                <button type="submit" class="btn">Sign In</button>
             </form>
         </div>
 
@@ -57,4 +37,79 @@
             </div>
         </div>
     </div>
-</div>    
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        console.log('JavaScript loaded');
+
+        const form1 = document.getElementById("form1");
+        const form2 = document.getElementById("form2");
+        const loginContainer = document.querySelector(".login-form-container");
+
+        // Attach submit event listeners to forms
+        form1.addEventListener('submit', (e) => {
+            e.preventDefault(); // Prevent the default form submission
+            handleFormSubmit(form1, '/signup');
+        });
+
+        form2.addEventListener('submit', (e) => {
+            e.preventDefault(); // Prevent the default form submission
+            handleFormSubmit(form2, '/login');
+        });
+
+        // Event listeners for panel buttons
+        document.getElementById("signIn").addEventListener("click", (e) => {
+            e.preventDefault();
+            if (loginContainer.classList.contains("right-panel-active")) {
+                loginContainer.classList.remove("right-panel-active");
+            }
+        });
+
+        document.getElementById("signUp").addEventListener("click", (e) => {
+            e.preventDefault();
+            if (!loginContainer.classList.contains("right-panel-active")) {
+                loginContainer.classList.add("right-panel-active");
+            }
+        });
+
+        async function handleFormSubmit(form, url) {
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+            console.log('Data to be sent:', data);
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+                console.log('Response:', result);
+
+                if (response.ok) {
+                    window.location.href = result.redirectUrl;
+                } else {
+                    displayErrors(result.errors);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        function displayErrors(errors) {
+            const container = document.getElementById('flashMessages');
+            container.innerHTML = ''; // Clear previous errors
+            console.log('Errors:', errors);
+            errors.forEach(error => {
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'alert alert-danger';
+                errorDiv.textContent = error.msg;
+                container.appendChild(errorDiv);
+            });
+        }
+    });
+</script>

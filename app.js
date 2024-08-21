@@ -8,7 +8,6 @@ import passport from 'passport';
 import flash from 'express-flash'
 import logger from 'morgan'
 import connectDB from './config/database.js'
-import bodyParser from 'body-parser';
 import expressLayouts from 'express-ejs-layouts';
 import fetch from 'node-fetch';
 import mainRouter from './routes/main.js'
@@ -35,7 +34,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.static("public"));
 app.use(expressLayouts);
 app.use(express.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(logger('dev'))
 // Sessions
 app.use(
