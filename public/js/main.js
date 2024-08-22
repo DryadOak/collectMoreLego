@@ -1,4 +1,3 @@
-"use strict";
 class FigureButtonHandler {
     constructor(buttonLabel, set) {
         this.buttonLabel = buttonLabel;
@@ -379,79 +378,112 @@ document.addEventListener('DOMContentLoaded', function() {
 // //   login / signup
 // embed flash messages into dom without refresh - style a message area for them for it remain consistant - no flicking forms - also add logout option
 // only works when in ejs file - timing reason
-// document.addEventListener("DOMContentLoaded", () => {
-//     console.log('JavaScript loaded');
-//     const signInBtn = document.getElementById("signIn");
-//     const signUpBtn = document.getElementById("signUp");
-//     const firstForm = document.getElementById("form1");
-//     const secondForm = document.getElementById("form2");
-//     const loginContainer = document.querySelector(".login-form-container");
+document.addEventListener("DOMContentLoaded", () => {
+    console.log('JavaScript loaded');
 
-//     signInBtn.addEventListener("click", async (e) => {
-//         e.preventDefault()
-//         if (loginContainer.classList.contains("right-panel-active")) {
-//             loginContainer.classList.remove("right-panel-active");
-//              // Prevent form submission if switching panels
-//         } else {
-//              // Prevent the default form submission
-//             await handleFormSubmit(secondForm, '/login');
-//         }
-//     });
+    const signInBtn = document.getElementById("signIn");
+    const signUpBtn = document.getElementById("signUp");
+    const firstForm = document.getElementById("form1");
+    const secondForm = document.getElementById("form2");
+    const loginContainer = document.querySelector(".login-form-container");
 
-//     signUpBtn.addEventListener("click", async (e) => {
-//         e.preventDefault()
-//         if (!loginContainer.classList.contains("right-panel-active")) {
-//             loginContainer.classList.add("right-panel-active");
-//              // Prevent form submission if switching panels
-//         } else {
-//              // Prevent the default form submission
-//             await handleFormSubmit(firstForm, '/signup'); 
-//         }
-//     });
+    console.log('signInBtn:', signInBtn);
+    console.log('signUpBtn:', signUpBtn);
+    console.log('firstForm:', firstForm);
+    console.log('secondForm:', secondForm);
+    console.log('loginContainer:', loginContainer);
 
-//     async function handleFormSubmit(form, url) {
-//         const formData = new FormData(form);
-//         const data = Object.fromEntries(formData.entries());
-//         console.log(data)
+    signInBtn && signInBtn.addEventListener("click", async (e) => {
+        e.preventDefault();
+        console.log('Sign In button clicked');
+        console.log('loginContainer classes:', loginContainer.classList);
 
-//         try {
-//             const response = await fetch(url, {
-//                 method: 'POST',
-//                 headers: {
-//                     'Content-Type': 'application/json'
-//                 },
-//                 body: JSON.stringify(data)
-//             });
+        if (loginContainer.classList.contains("right-panel-active")) {
+            console.log('Removing "right-panel-active" class from loginContainer');
+            loginContainer.classList.remove("right-panel-active");
+            // Prevent form submission if switching panels
+        } else {
+            console.log('Right panel is not active, submitting second form');
+            await handleFormSubmit(secondForm, '/login');
+        }
+    });
 
-//             const result = await response.json();
-//             console.log('Response:', result);
+    signUpBtn && signUpBtn.addEventListener("click", async (e) => {
+        e.preventDefault();
+        console.log('Sign Up button clicked');
+        console.log('loginContainer classes:', loginContainer.classList);
 
-//             if (result.errors) {
-//                 // Redirect to another page if successful
-//                 window.location.href = result.redirectUrl;
-//             } else {
-//                 // Display errors
-//                 displayErrors(result.errors);
-//             }
-//         } catch (error) {
-//             console.error('Error:', error);
-//         }
-//     }
+        if (!loginContainer.classList.contains("right-panel-active")) {
+            console.log('Adding "right-panel-active" class to loginContainer');
+            loginContainer.classList.add("right-panel-active");
+            // Prevent form submission if switching panels
+        } else {
+            console.log('Right panel is active, submitting first form');
+            await handleFormSubmit(firstForm, '/signup'); 
+        }
+    });
 
-//     function displayErrors(errors) {
-//         const container = document.getElementById('flashMessages');
-//         container.innerHTML = ''; // Clear previous errors
-//         console.log(errors)
-//         errors.forEach(error => {
-//             const errorDiv = document.createElement('div');
-//             errorDiv.className = 'alert alert-danger';
-//             errorDiv.textContent = error.msg;
-//             container.appendChild(errorDiv);
-//         });
-//     }
-// });
+    
+});
 
+// move to where sutible maybe utils??? -consider moving search logic from header to achive the same
+async function handleFormSubmit(form, url) {
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+        console.log('Form data to be sent:', data);
+    
+        try {
+            console.log('Sending fetch request to URL:', url);
+            console.log('Request details:', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+    
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+    
+            console.log('Response status:', response.status);
+            console.log('Response headers:', response.headers);
+    
+            const result = await response.json();
+            console.log('Response JSON:', result);
+    
+            if (result.errors) {
+                console.log('Form submission errors:', result.errors);
+                displayErrors(result.errors);
+            } else {
+                console.log('Form submission successful, redirecting to:', result.redirectUrl);
+                window.location.href = result.redirectUrl;
+            }
+        } catch (error) {
+            console.error('Error during form submission:', error);
+        }
+    }
+    
+    function displayErrors(errors) {
+        const container = document.getElementById('flashMessages');
+        container.innerHTML = ''; // Clear previous errors
+    if (!Array.isArray(errors)) {
+            errors = [errors]; // Wrap single error object in an array
+        }
 
+        console.log('Displaying errors:', errors);
+    
+        errors.forEach(error => {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'alert alert-danger';
+            errorDiv.textContent = error.msg;
+            container.appendChild(errorDiv);
+        });
+    }
 
     
 

@@ -5,7 +5,7 @@
     <div class="login-form-container right-panel-active">
         <!-- Sign Up -->
         <div class="container__form container--signup">
-            <form id="form1" class="form" action="/signup" method="POST">
+            <form id="form1" class="form" action="/signup" method="POST" onsubmit="event.preventDefault(); handleFormSubmit(this, '/signup'); return false;">
                 <h2 class="form__title">Sign Up</h2>
                 <input type="text" name="userName" placeholder="User" class="input" />
                 <input type="email" name="email" placeholder="Email" class="input" />
@@ -17,7 +17,7 @@
             
         <!-- Sign In -->
         <div class="container__form container--signin">
-            <form id="form2" class="form" action="/login" method="POST">
+            <form id="form2" class="form" action="/login" method="POST" onsubmit="event.preventDefault(); handleFormSubmit(this, '/login'); return false;">
                 <h2 class="form__title">Sign In</h2>
                 <input type="email" name="email" placeholder="Email" class="input" />
                 <input type="password" name="password" placeholder="Password" class="input" />
@@ -38,78 +38,3 @@
         </div>
     </div>
 </div>
-
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        console.log('JavaScript loaded');
-
-        const form1 = document.getElementById("form1");
-        const form2 = document.getElementById("form2");
-        const loginContainer = document.querySelector(".login-form-container");
-
-        // Attach submit event listeners to forms
-        form1.addEventListener('submit', (e) => {
-            e.preventDefault(); // Prevent the default form submission
-            handleFormSubmit(form1, '/signup');
-        });
-
-        form2.addEventListener('submit', (e) => {
-            e.preventDefault(); // Prevent the default form submission
-            handleFormSubmit(form2, '/login');
-        });
-
-        // Event listeners for panel buttons
-        document.getElementById("signIn").addEventListener("click", (e) => {
-            e.preventDefault();
-            if (loginContainer.classList.contains("right-panel-active")) {
-                loginContainer.classList.remove("right-panel-active");
-            }
-        });
-
-        document.getElementById("signUp").addEventListener("click", (e) => {
-            e.preventDefault();
-            if (!loginContainer.classList.contains("right-panel-active")) {
-                loginContainer.classList.add("right-panel-active");
-            }
-        });
-
-        async function handleFormSubmit(form, url) {
-            const formData = new FormData(form);
-            const data = Object.fromEntries(formData.entries());
-            console.log('Data to be sent:', data);
-
-            try {
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                });
-
-                const result = await response.json();
-                console.log('Response:', result);
-
-                if (response.ok) {
-                    window.location.href = result.redirectUrl;
-                } else {
-                    displayErrors(result.errors);
-                }
-            } catch (error) {
-                console.error('Error:', error);
-            }
-        }
-
-        function displayErrors(errors) {
-            const container = document.getElementById('flashMessages');
-            container.innerHTML = ''; // Clear previous errors
-            console.log('Errors:', errors);
-            errors.forEach(error => {
-                const errorDiv = document.createElement('div');
-                errorDiv.className = 'alert alert-danger';
-                errorDiv.textContent = error.msg;
-                container.appendChild(errorDiv);
-            });
-        }
-    });
-</script>
