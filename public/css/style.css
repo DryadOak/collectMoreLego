@@ -843,8 +843,13 @@ input[type="text"]{
 	transform: translateX(-100%);
 }
 
-.overlay {
+.login-overlay {
 	background-color: var(--clr-neutral-400);
+    background: url("/images/login.jpg");
+    background-attachment: fixed;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
 	height: 100%;
 	left: -100%;
 	position: relative;
@@ -853,7 +858,7 @@ input[type="text"]{
 	width: 200%;
 }
 
-.login-form-container.right-panel-active .overlay {
+.login-form-container.right-panel-active .login-overlay {
 	transform: translateX(50%);
 }
 
@@ -946,6 +951,15 @@ input[type="text"]{
 		opacity: 1;
 		z-index: 5;
 	}
+}
+
+.flash-messages{
+    margin: 3rem;
+    border-radius: 1.2rem;
+    padding: 1.5rem;
+    position: absolute;
+    z-index: 999;
+    background-color: var(--clr-neutral-200);
 }
 
 

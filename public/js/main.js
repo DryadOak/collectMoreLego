@@ -427,6 +427,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // move to where sutible maybe utils??? -consider moving search logic from header to achive the same
+// also remove logs or set the to a debug var
 async function handleFormSubmit(form, url) {
         const formData = new FormData(form);
         const data = Object.fromEntries(formData.entries());
@@ -471,6 +472,8 @@ async function handleFormSubmit(form, url) {
     function displayErrors(errors) {
         const container = document.getElementById('flashMessages');
         container.innerHTML = ''; // Clear previous errors
+        container.classList.add('flash-messages');
+
     if (!Array.isArray(errors)) {
             errors = [errors]; // Wrap single error object in an array
         }
