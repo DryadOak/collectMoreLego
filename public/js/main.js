@@ -420,7 +420,6 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
 // //   login / signup
-// also add logout option
 document.addEventListener("DOMContentLoaded", () => {
 
     const signInBtn = document.getElementById("signIn");
@@ -436,7 +435,7 @@ document.addEventListener("DOMContentLoaded", () => {
             loginContainer.classList.remove("right-panel-active");
             // Prevent form submission if switching panels
         } else {
-            await handleFormSubmit(secondForm, '/login');
+            await DOMUtils.handleFormSubmit(secondForm, '/login');
         }
     });
 
@@ -447,7 +446,7 @@ document.addEventListener("DOMContentLoaded", () => {
             loginContainer.classList.add("right-panel-active");
             // Prevent form submission if switching panels
         } else {
-            await handleFormSubmit(firstForm, '/signup'); 
+            await DOMUtils.handleFormSubmit(firstForm, '/signup'); 
         }
     });
 

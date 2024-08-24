@@ -4,6 +4,7 @@
     --clr-neutral-200: rgb(242, 242, 242);
     --clr-neutral-300: rgb(222, 220, 220);
     --clr-neutral-400: rgb(149, 149, 149);
+    --clr-neutral-500: rgb(114, 114, 114);
     --clr-neutral-600: rgb(79, 79, 79);
     --clr-neutral-900: black;
     --clr-warning: rgb(236, 107, 107);
@@ -435,7 +436,7 @@ footer{
 
 /* hero and collection stats */
 .hero {
-    background-image: url("/images/collectionHeroSmall.jpg");
+    background-image: url("/images/collectionHeroSmall.webp");
     background-size: cover;
     background-repeat: no-repeat;
     height: 35rem;
@@ -443,7 +444,7 @@ footer{
 
 @media (min-width: 769px) {
     .hero {
-        background-image: url("/images/collectionHero.jpg");
+        background-image: url("/images/collectionHero.webp");
     }
 }
 
@@ -845,7 +846,7 @@ input[type="text"]{
 
 .login-overlay {
 	background-color: var(--clr-neutral-400);
-    background: url("/images/login.jpg");
+    background: url("/images/login.webp");
     background-attachment: fixed;
 	background-position: center;
 	background-repeat: no-repeat;
@@ -895,14 +896,14 @@ input[type="text"]{
 
 .btn {
 	background-color: var(--clr-neutral-600);
-	background-image: linear-gradient(90deg, var(--clr-neutral-600) 0%, var(--clr-neutral-400) 74%);
+	background-image: linear-gradient(90deg, var(--clr-neutral-500) 0%, var(--clr-neutral-400) 74%);
 	border-radius: 1.7rem;
-	border: 1px solid var(--clr-neutral-600);
+	border: 1px solid var(--clr-neutral-400);
 	color: var(--clr-neutral-200);
 	cursor: pointer;
-	font-size: 0.8rem;
+	font-size: 1.2rem;
 	font-weight: bold;
-	letter-spacing: 0.1rem;
+	letter-spacing: 0.2rem;
 	padding: 0.9rem 4rem;
 	text-transform: uppercase;
 	transition: transform 80ms ease-in;
@@ -956,7 +957,7 @@ input[type="text"]{
 .flash-messages{
     margin: 3rem;
     border-radius: 1.2rem;
-    padding: 1.5rem;
+    padding: 1.2rem;
     position: absolute;
     z-index: 999;
     background-color: var(--clr-neutral-200);
