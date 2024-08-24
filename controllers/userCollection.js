@@ -9,24 +9,24 @@ dotenv.config();
 
 export const addItemToDataBase = async (req, res, itemModelType) => {
     const legoSet = req.body.set;
-    console.log(req.user)
     const userId = req.user.id;  
     legoSet.userId = userId;
     
     let itemModel = itemModelType === 'CollectionItem' ? CollectionItem : WishlistItem
-    // Ensure that required fields are present
     if (!legoSet || !legoSet.setID || !legoSet.name || !legoSet.number) {
         return res.status(400).json({ error: 'Invalid Lego set data.' });
     }
 
-    const existingItem = await itemModel.findOne({ setID: legoSet.setID });
+    const existingItem = await itemModel.findOne({ 
+        userId: req.user.id, 
+        setID: legoSet.setID 
+    });
     if (existingItem) {
         return res.status(400).json({ error: `Lego set with the same setID already exists in the ${itemModel.modelName}.` });
     }
 
     const newItem = new itemModel(legoSet);
     const result = await newItem.save();
-    // console.log('Document saved successfully:', result);
 
     res.send(result);
 };
