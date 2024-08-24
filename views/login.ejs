@@ -5,7 +5,7 @@
     <div class="login-form-container right-panel-active">
         <!-- Sign Up -->
         <div class="container__form container--signup">
-            <form id="form1" class="form" action="/signup" method="POST" onsubmit="event.preventDefault(); handleFormSubmit(this, '/signup'); return false;">
+            <form id="form1" class="form" action="/signup" method="POST" onsubmit="event.preventDefault(); DOMUtils.handleFormSubmit(this, '/signup'); return false;">
                 <h2 class="form__title">Sign Up</h2>
                 <input type="text" name="userName" placeholder="User" class="input" />
                 <input type="email" name="email" placeholder="Email" class="input" />
@@ -17,7 +17,7 @@
             
         <!-- Sign In -->
         <div class="container__form container--signin">
-            <form id="form2" class="form" action="/login" method="POST" onsubmit="event.preventDefault(); handleFormSubmit(this, '/login'); return false;">
+            <form id="form2" class="form" action="/login" method="POST" onsubmit="event.preventDefault(); DOMUtils.handleFormSubmit(this, '/login'); return false;">
                 <h2 class="form__title">Sign In</h2>
                 <input type="email" name="email" placeholder="Email" class="input" />
                 <input type="password" name="password" placeholder="Password" class="input" />

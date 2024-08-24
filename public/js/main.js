@@ -348,6 +348,50 @@ class DOMUtils {
             }
         });
     }
+
+    static async handleFormSubmit(form, url) {
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+    
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+    
+            const result = await response.json();
+    
+            if (result.errors) {
+                DOMUtils.displayErrors(result.errors);
+            } else {
+                window.location.href = result.redirectUrl;
+            }
+        } catch (error) {
+            console.error('Error during form submission:', error);
+        }
+    }
+    
+    static displayErrors(errors) {
+        const container = document.getElementById('flashMessages');
+        container.innerHTML = ''; 
+        container.classList.add('flash-messages');
+
+    if (!Array.isArray(errors)) {
+            errors = [errors]; // Wrap single error object in an array
+        }
+
+        console.log('Displaying errors:', errors);
+    
+        errors.forEach(error => {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'alert alert-danger';
+            errorDiv.textContent = error.msg;
+            container.appendChild(errorDiv);
+        });
+    }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -376,10 +420,8 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
 // //   login / signup
-// embed flash messages into dom without refresh - style a message area for them for it remain consistant - no flicking forms - also add logout option
-// only works when in ejs file - timing reason
+// also add logout option
 document.addEventListener("DOMContentLoaded", () => {
-    console.log('JavaScript loaded');
 
     const signInBtn = document.getElementById("signIn");
     const signUpBtn = document.getElementById("signUp");
@@ -387,106 +429,30 @@ document.addEventListener("DOMContentLoaded", () => {
     const secondForm = document.getElementById("form2");
     const loginContainer = document.querySelector(".login-form-container");
 
-    console.log('signInBtn:', signInBtn);
-    console.log('signUpBtn:', signUpBtn);
-    console.log('firstForm:', firstForm);
-    console.log('secondForm:', secondForm);
-    console.log('loginContainer:', loginContainer);
-
     signInBtn && signInBtn.addEventListener("click", async (e) => {
         e.preventDefault();
-        console.log('Sign In button clicked');
-        console.log('loginContainer classes:', loginContainer.classList);
 
         if (loginContainer.classList.contains("right-panel-active")) {
-            console.log('Removing "right-panel-active" class from loginContainer');
             loginContainer.classList.remove("right-panel-active");
             // Prevent form submission if switching panels
         } else {
-            console.log('Right panel is not active, submitting second form');
             await handleFormSubmit(secondForm, '/login');
         }
     });
 
     signUpBtn && signUpBtn.addEventListener("click", async (e) => {
         e.preventDefault();
-        console.log('Sign Up button clicked');
-        console.log('loginContainer classes:', loginContainer.classList);
 
         if (!loginContainer.classList.contains("right-panel-active")) {
-            console.log('Adding "right-panel-active" class to loginContainer');
             loginContainer.classList.add("right-panel-active");
             // Prevent form submission if switching panels
         } else {
-            console.log('Right panel is active, submitting first form');
             await handleFormSubmit(firstForm, '/signup'); 
         }
     });
 
     
 });
-
-// move to where sutible maybe utils??? -consider moving search logic from header to achive the same
-// also remove logs or set the to a debug var
-async function handleFormSubmit(form, url) {
-        const formData = new FormData(form);
-        const data = Object.fromEntries(formData.entries());
-        console.log('Form data to be sent:', data);
-    
-        try {
-            console.log('Sending fetch request to URL:', url);
-            console.log('Request details:', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            });
-    
-            const response = await fetch(url, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            });
-    
-            console.log('Response status:', response.status);
-            console.log('Response headers:', response.headers);
-    
-            const result = await response.json();
-            console.log('Response JSON:', result);
-    
-            if (result.errors) {
-                console.log('Form submission errors:', result.errors);
-                displayErrors(result.errors);
-            } else {
-                console.log('Form submission successful, redirecting to:', result.redirectUrl);
-                window.location.href = result.redirectUrl;
-            }
-        } catch (error) {
-            console.error('Error during form submission:', error);
-        }
-    }
-    
-    function displayErrors(errors) {
-        const container = document.getElementById('flashMessages');
-        container.innerHTML = ''; // Clear previous errors
-        container.classList.add('flash-messages');
-
-    if (!Array.isArray(errors)) {
-            errors = [errors]; // Wrap single error object in an array
-        }
-
-        console.log('Displaying errors:', errors);
-    
-        errors.forEach(error => {
-            const errorDiv = document.createElement('div');
-            errorDiv.className = 'alert alert-danger';
-            errorDiv.textContent = error.msg;
-            container.appendChild(errorDiv);
-        });
-    }
 
     
 
