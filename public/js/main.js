@@ -47,9 +47,6 @@ class FigureButtonHandler {
                         console.error('Error:', error);
                         this.showFailureAnimation();
                     }
-                default:
-                    console.error('Invalid button label');
-                    return;
             }
         } catch (error) {
             console.error('Error:', error);
@@ -382,8 +379,6 @@ class DOMUtils {
     if (!Array.isArray(errors)) {
             errors = [errors]; // Wrap single error object in an array
         }
-
-        console.log('Displaying errors:', errors);
     
         errors.forEach(error => {
             const errorDiv = document.createElement('div');
