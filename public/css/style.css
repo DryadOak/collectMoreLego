@@ -846,7 +846,7 @@ input[type="text"]{
 
 .login-overlay {
 	background-color: var(--clr-neutral-400);
-    background: url("/images/login.webp");
+    background: url("/images/loginSmall.webp");
     background-attachment: fixed;
 	background-position: center;
 	background-repeat: no-repeat;
@@ -857,6 +857,16 @@ input[type="text"]{
 	transform: translateX(0);
 	transition: transform 0.6s ease-in-out;
 	width: 200%;
+}
+
+@media (min-width: 658px){
+    .login-overlay {
+    background: url("/images/login.webp");
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+    }
+
 }
 
 .login-form-container.right-panel-active .login-overlay {
@@ -963,4 +973,18 @@ input[type="text"]{
     background-color: var(--clr-neutral-200);
 }
 
+.logout-link{
+    align-self: center;
+}
 
+@media (min-width: 658px){
+    .logout-link{
+        order: +1;
+    }
+}
+@media (max-width: 659px){
+    .logout-link{
+        margin-left: auto;
+        padding-right: 1rem;
+    }
+}
